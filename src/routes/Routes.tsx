@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Layout from "../pages/Layout";
 import Profile from "../pages/Profile";
 import Foodcourt from "../pages/Foodcourt";
+import DetailFood from "../pages/DetailFood";
 const Routes = () => {
   return (
     <Router>
@@ -10,6 +11,7 @@ const Routes = () => {
         <Route index element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/product-list" element={<Foodcourt />}/>
+        <Route path="/product-detail" element={<DetailFood />}/>
       </Route>
     </Router>
   );
