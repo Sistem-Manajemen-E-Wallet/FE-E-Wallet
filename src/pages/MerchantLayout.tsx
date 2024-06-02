@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import "../assets/style/merchant.css";
 import {
   DashboardIcon,
@@ -42,6 +42,8 @@ const MerchantLayout: React.FC = () => {
     };
   }, [isSidebarOpen]);
 
+  const location = useLocation();
+
   return (
     <div>
       <aside
@@ -66,26 +68,45 @@ const MerchantLayout: React.FC = () => {
             <li>
               <Link
                 to="/merchant"
-                className="flex items-center p-2 bg-[#464BD8] text-white rounded-menu hover:bg-[#464BD8]/80"
+                className={`flex items-center p-2 rounded-menu ${
+                  location.pathname === "/merchant"
+                    ? "bg-[#464BD8] text-white"
+                    : "text-neutral-600 hover:bg-gray-100"
+                }`}
               >
-                <DashboardIcon />
-
+                <DashboardIcon
+                  color={
+                    location.pathname === "/merchant" ? "white" : "#525252"
+                  }
+                />
                 <span className="ms-3">Dashboard</span>
               </Link>
             </li>
             <li>
               <Link
-                to="#"
-                className="flex items-center p-2 text-neutral-600 rounded-menu hover:bg-gray-100"
+                to="/merchant/products"
+                className={`flex items-center p-2 rounded-menu ${
+                  location.pathname === "/merchant/products"
+                    ? "bg-[#464BD8] text-white"
+                    : "text-neutral-600 hover:bg-gray-100"
+                }`}
               >
-                <ProductIcon />
+                <ProductIcon
+                  color={
+                    location.pathname === "/merchant/products" ? "white" : "#525252"
+                  }
+                />
                 <span className="ms-3">My products</span>
               </Link>
             </li>
             <li>
               <Link
-                to="#"
-                className="flex items-center p-2 text-neutral-600 rounded-menu hover:bg-gray-100"
+                to="/merchant/transactions"
+                className={`flex items-center p-2 rounded-menu ${
+                  location.pathname === "/merchant/transactions"
+                    ? "bg-[#464BD8] text-white"
+                    : "text-neutral-600 hover:bg-gray-100"
+                }`}
               >
                 <TransactionIcon />
                 <span className="ms-3">My transactions</span>
@@ -93,8 +114,12 @@ const MerchantLayout: React.FC = () => {
             </li>
             <li>
               <Link
-                to="#"
-                className="flex items-center p-2 text-neutral-600 rounded-menu hover:bg-gray-100"
+                to="/merchant/profile"
+                className={`flex items-center p-2 rounded-menu ${
+                  location.pathname === "/merchant/profile"
+                    ? "bg-[#464BD8] text-white"
+                    : "text-neutral-600 hover:bg-gray-100"
+                }`}
               >
                 <ProfileIcon />
                 <span className="ms-3">My profile</span>
@@ -102,11 +127,14 @@ const MerchantLayout: React.FC = () => {
             </li>
             <li>
               <Link
-                to="#"
-                className="flex items-center p-2 text-neutral-600 rounded-menu hover:bg-gray-100"
+                to="/logout"
+                className={`flex items-center p-2 rounded-menu ${
+                  location.pathname === "/logout"
+                    ? "bg-[#464BD8] text-white"
+                    : "text-neutral-600 hover:bg-gray-100"
+                }`}
               >
                 <LogoutIcon />
-
                 <span className="ms-3">Logout</span>
               </Link>
             </li>

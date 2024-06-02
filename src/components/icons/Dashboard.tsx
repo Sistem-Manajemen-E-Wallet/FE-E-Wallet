@@ -1,8 +1,10 @@
-const Dashboard = () => {
+import React from "react";
+
+const Dashboard: React.FC<{ color?: string }> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="white"
+      fill={props.color}
       width="30px"
       height="30px"
       viewBox="0 0 24 24"
