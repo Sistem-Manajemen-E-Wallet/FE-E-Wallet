@@ -17,6 +17,16 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    screens: {
+      mobile: {
+        min: "320px",
+        max: "629px",
+      },
+      tablet: {
+        min: "630px",
+        max: "768px",
+      },
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
