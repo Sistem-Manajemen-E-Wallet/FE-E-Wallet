@@ -7,7 +7,7 @@ import "swiper/css/scrollbar";
 
 const Carousel = () => {
   return (
-    <div className="mt-10 py-10 bg-secondary-first px-10 w-full h-auto">
+    <div className="mt-10 py-10 bg-secondary-first px-10 mobile:px-0 mobile:p-0 w-full h-auto">
       <div className="container">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar]}
