@@ -31,9 +31,12 @@ const Product = () => {
             <p className="text-xl font-bold">Pecel lele</p>
             <p className="text-neutral-400">Nasi + lele + sambal + lalapan</p>
             <span className="flex items-center justify-start gap-2">
-              <button className="py-0.5 px-2 rounded-[10px] bg-teal-400 hover:bg-teal-600 text-white">
+              <Link
+                to="/merchant/product/edit"
+                className="py-0.5 px-2 rounded-[10px] bg-teal-400 hover:bg-teal-600 text-white"
+              >
                 Edit
-              </button>
+              </Link>
               <button className="py-0.5 px-2 rounded-[10px] bg-rose-400 hover:bg-rose-600 text-white">
                 Delete
               </button>
