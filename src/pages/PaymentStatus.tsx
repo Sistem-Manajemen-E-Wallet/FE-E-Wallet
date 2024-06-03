@@ -1,4 +1,5 @@
 import { LogoSuccess } from "../assets/logo";
+import { numberWithCommas } from "../utils/hooks/usePrice";
 
 const PaymentStatus = () => {
   return (
@@ -11,9 +12,11 @@ const PaymentStatus = () => {
           Success Payment
         </p>
         <p className="mb-5 text-xl font-medium text-white">Total Cost</p>
-        <p className="mb-16 text-lg font-bold text-white">Rp. 40,000</p>
+        <p className="mb-16 text-lg font-bold text-white">
+          Rp. {numberWithCommas(40000)}
+        </p>
         <p className="font-light text-sm text-white">
-          Your current balance is Rp. 19.060.000{" "}
+          Your current balance is Rp. {numberWithCommas(19060000)}
         </p>
       </div>
     </section>
