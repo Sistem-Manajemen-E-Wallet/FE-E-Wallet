@@ -50,11 +50,11 @@ const MerchantLayout: React.FC = () => {
         ref={sidebarRef}
         id="logo-sidebar"
         className={`fixed top-0 left-0 z-40 w-80 h-screen transition-transform ${
-          isSidebarOpen ? "translate-x-0 lg:translate-x-0" : "-translate-x-full"
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-white shadow-lg shadow-gray-200">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-white shadow-md shadow-neutral-400">
           <div className="flex flex-col items-center justify-center">
             <Link to="/merchant" className="flex flex-col items-center my-5">
               <img src={Logo} alt="logo" height={60} width={60} />
@@ -86,14 +86,18 @@ const MerchantLayout: React.FC = () => {
               <Link
                 to="/merchant/products"
                 className={`flex items-center p-2 rounded-menu ${
-                  location.pathname === "/merchant/products"
+                  location.pathname === "/merchant/products" ||
+                  location.pathname === "/merchant/product/create"
                     ? "bg-[#464BD8] text-white"
                     : "text-neutral-600 hover:bg-gray-100"
                 }`}
               >
                 <ProductIcon
                   color={
-                    location.pathname === "/merchant/products" ? "white" : "#525252"
+                    location.pathname === "/merchant/products" ||
+                    location.pathname === "/merchant/product/create"
+                      ? "white"
+                      : "#525252"
                   }
                 />
                 <span className="ms-3">My products</span>
@@ -141,16 +145,16 @@ const MerchantLayout: React.FC = () => {
           </ul>
         </div>
       </aside>
-      <div className="lg:ml-80 bg-gray-50 relative min-h-screen">
+      <div className="ml-80 mobile:ml-0 tablet:ml-0 bg-gray-50 relative min-h-screen">
         <button
           onClick={toggleSidebar}
           aria-controls="logo-sidebar"
           type="button"
-          className="inline-flex lg:hidden items-center p-2 mt-4 ms-3 text-sm bg-primary-first hover:bg-primary-first/80 text-white rounded-menu"
+          className="tablet:inline-flex mobile:inline-flex hidden items-center p-2 mt-4 ms-3 text-sm bg-primary-first hover:bg-primary-first/80 text-white rounded-menu"
         >
           Open menu
         </button>
-        <div className="lg:px-12 px-3 lg:py-10 py-4">
+        <div className="px-10 tablet:px-3 mobile:px-3 py-10 tablet:py-4 mobile:py-4">
           <nav className="px-4 flex justify-between bg-white shadow border rounded">
             <div className="flex items-center gap-4">
               <WalletIcon />
@@ -174,7 +178,7 @@ const MerchantLayout: React.FC = () => {
           <Outlet />
         </div>
 
-        <footer className="lg:px-12 px-3 py-4 flex justify-between bg-gray-50 shadow-lg rounded-md absolute bottom-0 left-0 right-0 z-10">
+        <footer className="px-12 tablet:px-3 mobile:px-3 py-4 flex justify-between bg-gray-50 shadow-lg rounded-md absolute bottom-0 left-0 right-0 z-10">
           <span className="text-neutral-400">© 2024 Copyright: Altapay</span>
         </footer>
       </div>

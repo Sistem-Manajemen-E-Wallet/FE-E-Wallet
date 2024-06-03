@@ -9,6 +9,7 @@ import MerchantHome from "../pages/merchant/Home";
 import Product from "../pages/merchant/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import CreateProduct from "../pages/merchant/CreateProduct";
 
 const Routes = () => {
   return (
@@ -22,6 +23,7 @@ const Routes = () => {
       <Route path="/merchant" element={<MerchantLayout />}>
         <Route index element={<MerchantHome />} />
         <Route path="/merchant/products" element={<Product />} />
+        <Route path="/merchant/product/create" element={<CreateProduct />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
