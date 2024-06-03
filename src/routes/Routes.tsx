@@ -12,6 +12,9 @@ import Register from "../pages/Register";
 import History from "../pages/History";
 import CreateProduct from "../pages/merchant/CreateProduct";
 import EditProduct from "../pages/merchant/EditProduct";
+import Checkout from "../pages/Checkout";
+import VerifyPin from "../pages/VerifyPin";
+import PaymentStatus from "../pages/PaymentStatus";
 
 const Routes = () => {
   return (
@@ -22,6 +25,9 @@ const Routes = () => {
         <Route path="/product-list" element={<Foodcourt />} />
         <Route path="/product-detail" element={<DetailFood />} />
         <Route path="/history" element={<History />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/verify-pin" element={<VerifyPin />} />
+        <Route path="/payment-detail" element={<PaymentStatus />} />
       </Route>
       <Route path="/merchant" element={<MerchantLayout />}>
         <Route index element={<MerchantHome />} />
