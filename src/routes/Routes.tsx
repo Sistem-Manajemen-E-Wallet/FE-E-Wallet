@@ -18,6 +18,7 @@ import Transaction from "../pages/merchant/Transaction";
 import Checkout from "../pages/Checkout";
 import VerifyPin from "../pages/VerifyPin";
 import PaymentStatus from "../pages/PaymentStatus";
+import TopUpStatus from "../pages/TopUpStatus";
 
 const Routes = () => {
   return (
@@ -30,6 +31,7 @@ const Routes = () => {
         <Route path="/history" element={<History />} />
         <Route path="/top-up" element={<TopUp />} />
         <Route path="/top-up-detail" element={<TransactionPending />} />
+        <Route path="/top-up-status" element={<TopUpStatus />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/verify-pin" element={<VerifyPin />} />
         <Route path="/payment-detail" element={<PaymentStatus />} />

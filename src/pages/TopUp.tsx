@@ -1,5 +1,7 @@
 import { useState } from "react";
 import RadioBank from "../components/Radio";
+import { numberWithCommas } from "@/utils/hooks/usePrice";
+import { Link } from "react-router-dom";
 
 const TopUp = () => {
   const [selectedValue, setSelectedValue] = useState<string>("default");
@@ -71,62 +73,50 @@ const TopUp = () => {
             <div className="flex-1 container bg-white border border-gray-200 rounded-xl p-5 shadow-lg">
               <h2 className="mb-5 font-semibold">Select Nominal</h2>
               <div className="grid grid-cols-4 gap-4 mb-5">
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    30.000
-                  </button>
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    50.000
-                  </button>
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    100.000
-                  </button>
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    200.000
-                  </button>
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    300.000
-                  </button>
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    400.000
-                  </button>
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    500.000
-                  </button>
-                  <button
-                    className="p-4 border border-gray-300 rounded cursor-pointer"
-                  >
-                    1.000.000
-                  </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(30000)}
+                </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(50000)}
+                </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(100000)}
+                </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(200000)}
+                </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(300000)}
+                </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(400000)}
+                </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(500000)}
+                </button>
+                <button className="p-4 border border-gray-300 rounded cursor-pointer">
+                  Rp {numberWithCommas(1000000)}
+                </button>
               </div>
               <h2 className="mb-5 font-semibold">Nominal</h2>
               <div className="mb-6">
-              <input
-                type="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="Rp."
-              />
-              <p className="text-xs text-[#737373]">minimal top up Rp10.000</p>
-            </div>
-              <button
-              type="submit"
-              className="text-white bg-[#464BD8] hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-            >
-              Top Up
-            </button>
+                <input
+                  type="number"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  placeholder="Rp."
+                />
+                <p className="text-xs text-[#737373]">
+                  minimal top up Rp10.000
+                </p>
+              </div>
+              <Link to={"/top-up-detail"}>
+                <button
+                  type="submit"
+                  className="text-white bg-[#464BD8] hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+                >
+                  Top Up
+                </button>
+              </Link>
             </div>
           </form>
         </div>
