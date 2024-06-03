@@ -7,7 +7,7 @@ const Product = () => {
       <div className="my-8 flex flex-wrap items-center gap-x-4 gap-y-2">
         <Link
           to="/merchant/product/create"
-          className="bg-primary-first hover:bg-primary-first/90 text-white font-bold py-2 px-3 rounded-[8px]"
+          className="bg-[#464BD8] hover:bg-[#464BD8]/90 text-white font-bold py-2 px-3 rounded-[8px]"
         >
           Add Product
         </Link>
