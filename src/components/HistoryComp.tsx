@@ -7,8 +7,11 @@ const HistoryComp = (props: {
   type: string;
   price: number;
 }) => {
+
   return (
-    <div className="bg-white mb-5 hover:bg-slate-400 py-2 px-2">
+    <div
+      className="bg-white mb-5 hover:bg-slate-400 py-2 px-2"
+    >
       <div className="flex justify-between">
         <p className="font-light">{props.date}</p>
         <div

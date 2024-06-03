@@ -14,6 +14,11 @@ import CreateProduct from "../pages/merchant/CreateProduct";
 import EditProduct from "../pages/merchant/EditProduct";
 import TopUp from "../pages/TopUp";
 import TransactionPending from "../pages/TransactionPending";
+import Transaction from "../pages/merchant/Transaction";
+import Checkout from "../pages/Checkout";
+import VerifyPin from "../pages/VerifyPin";
+import PaymentStatus from "../pages/PaymentStatus";
+import TopUpStatus from "../pages/TopUpStatus";
 
 const Routes = () => {
   return (
@@ -26,12 +31,17 @@ const Routes = () => {
         <Route path="/history" element={<History />} />
         <Route path="/top-up" element={<TopUp />} />
         <Route path="/top-up-detail" element={<TransactionPending />} />
+        <Route path="/top-up-status" element={<TopUpStatus />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/verify-pin" element={<VerifyPin />} />
+        <Route path="/payment-detail" element={<PaymentStatus />} />
       </Route>
       <Route path="/merchant" element={<MerchantLayout />}>
         <Route index element={<MerchantHome />} />
         <Route path="/merchant/products" element={<Product />} />
         <Route path="/merchant/product/create" element={<CreateProduct />} />
         <Route path="/merchant/product/edit" element={<EditProduct />} />
+        <Route path="/merchant/transactions" element={<Transaction />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
