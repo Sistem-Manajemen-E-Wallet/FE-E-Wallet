@@ -112,7 +112,13 @@ const MerchantLayout: React.FC = () => {
                     : "text-neutral-600 hover:bg-gray-100"
                 }`}
               >
-                <TransactionIcon />
+                <TransactionIcon
+                  color={
+                    location.pathname === "/merchant/transactions"
+                      ? "white"
+                      : "#525252"
+                  }
+                />
                 <span className="ms-3">My transactions</span>
               </Link>
             </li>
@@ -125,7 +131,13 @@ const MerchantLayout: React.FC = () => {
                     : "text-neutral-600 hover:bg-gray-100"
                 }`}
               >
-                <ProfileIcon />
+                <ProfileIcon
+                  color={
+                    location.pathname === "/merchant/profile"
+                      ? "white"
+                      : "#525252"
+                  }
+                />
                 <span className="ms-3">My profile</span>
               </Link>
             </li>

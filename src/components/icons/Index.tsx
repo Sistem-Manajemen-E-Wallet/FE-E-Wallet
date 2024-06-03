@@ -5,6 +5,8 @@ import ProfileIcon from "./Profile";
 import LogoutIcon from "./Logout";
 import WalletIcon from "./Wallet";
 import IncomeIcon from "./Income";
+import FilterIcon from "./Filter";
+import SearchIcon from "./Search";
 
 export {
   DashboardIcon,
@@ -14,4 +16,6 @@ export {
   LogoutIcon,
   WalletIcon,
   IncomeIcon,
+  FilterIcon,
+  SearchIcon,
 };

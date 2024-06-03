@@ -1,4 +1,4 @@
-const Transaction = () => {
+const Transaction: React.FC<{ color?: string }> = ({ color = "#000000" }) => {
   return (
     <svg
       width="30px"
@@ -9,7 +9,7 @@ const Transaction = () => {
       <defs>
         <style
           dangerouslySetInnerHTML={{
-            __html: ".cls-1{fill:#525252;}",
+            __html: `.cls-1{fill:${color};}`,
           }}
         />
       </defs>
