@@ -23,7 +23,7 @@ const Home = () => {
       <div className="container">
         <div className="bg-primary-first mt-10 rounded-full py-10 px-10 flex justify-between items-center w-full">
           <div>
-            <p className="font-bold text-white text-3xl mb-2">
+            <p className="font-bold text-white text-3xl mb-2 mobile:text-center">
               Rp. 20,000,0000
             </p>
             <p className="font-light text-white text-xs">
@@ -44,19 +44,27 @@ const Home = () => {
       {/* Service Menu */}
       <div className="container mt-10">
         <p className="text-2xl font-extrabold ml-5">Service</p>
-        <div className="grid grid-flow-row auto-rows-max grid-cols-6 gap-3 py-10 gap-y-12">
-          <Menu key={1} name="Food Court" source={FoodCourt} navigate="/" />
-          <Menu key={1} name="Pay" source={Pay} navigate="/" />
-          <Menu key={1} name="Credit & Data" source={PulseData} navigate="/" />
-          <Menu key={1} name="BPJS Kesehatan" source={Bpjs} navigate="/" />
-          <Menu key={1} name="PDAM" source={Pdam} navigate="/" />
-          <Menu key={1} name="Internet" source={Internet} navigate="/" />
-          <Menu key={1} name="PLN" source={Pln} navigate="/" />
-          <Menu key={1} name="Voucher Game" source={Game} navigate="/" />
-          <Menu key={1} name="Cicilan" source={Cicilan} navigate="/" />
-          <Menu key={1} name="Pay Insurance" source={Insurance} navigate="/" />
-          <Menu key={1} name="TIX ID" source={TixId} navigate="/" />
-          <Menu key={1} name="Netflix" source={Netflix} navigate="/" />
+        <div
+          className="grid grid-flow-row auto-rows-max grid-cols-6 gap-3 py-10 gap-y-12 mobile:grid-cols-2 tablet:grid-cols-3
+        "
+        >
+          <Menu
+            key={1}
+            name="Food Court"
+            source={FoodCourt}
+            navigate="/product-list"
+          />
+          <Menu key={2} name="Pay" source={Pay} navigate="/" />
+          <Menu key={3} name="Credit & Data" source={PulseData} navigate="/" />
+          <Menu key={4} name="BPJS Kesehatan" source={Bpjs} navigate="/" />
+          <Menu key={5} name="PDAM" source={Pdam} navigate="/" />
+          <Menu key={6} name="Internet" source={Internet} navigate="/" />
+          <Menu key={7} name="PLN" source={Pln} navigate="/" />
+          <Menu key={8} name="Voucher Game" source={Game} navigate="/" />
+          <Menu key={9} name="Cicilan" source={Cicilan} navigate="/" />
+          <Menu key={10} name="Pay Insurance" source={Insurance} navigate="/" />
+          <Menu key={11} name="TIX ID" source={TixId} navigate="/" />
+          <Menu key={12} name="Netflix" source={Netflix} navigate="/" />
         </div>
       </div>
     </section>

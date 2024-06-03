@@ -11,6 +11,10 @@ import Insurance from "./insurance.svg";
 import TixId from "./tixid.svg";
 import Netflix from "./netflix.svg";
 import Pay from "./pay.svg";
+import LogoHome from "./home.svg";
+import LogoHistory from "./history.svg";
+import LogoUser from "./user.svg";
+import LogoLogout from "./log-out.svg";
 
 export {
   FoodCourt,
@@ -26,4 +30,8 @@ export {
   TixId,
   Netflix,
   Pay,
+  LogoHome,
+  LogoHistory,
+  LogoUser,
+  LogoLogout,
 };
