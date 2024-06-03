@@ -18,7 +18,7 @@ import Transaction from "../pages/merchant/Transaction";
 import Checkout from "../pages/Checkout";
 import VerifyPin from "../pages/VerifyPin";
 import PaymentStatus from "../pages/PaymentStatus";
-import MerchantProfile from "../pages/merchant/Profile"
+import MerchantProfile from "../pages/merchant/Profile";
 
 const Routes = () => {
   return (
