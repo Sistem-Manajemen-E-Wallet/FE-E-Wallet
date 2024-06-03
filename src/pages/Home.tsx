@@ -21,7 +21,7 @@ const Home = () => {
     <section className="relative p-0 overflow-auto h-screen py-32">
       {/* Information Wallet */}
       <div className="container">
-        <div className="bg-primary-first mt-10 rounded-full py-10 px-10 flex justify-between items-center w-full">
+        <div className="bg-primary-first mt-10 rounded-full py-10 px-10 flex mobile:block justify-between items-center w-full mobile:text-center">
           <div>
             <p className="font-bold text-white text-3xl mb-2 mobile:text-center">
               Rp. 20,000,0000
@@ -30,10 +30,15 @@ const Home = () => {
               Current AltaPay Wallet Balance
             </p>
           </div>
-          <div>
-            <Link className="bg-white p-4 rounded-full text-2xl" to={"/"}>
-              <span className="font-extrabold text-3xl mr-2">+</span> Add Money
-              to Wallet
+          <div className="mobile:mt-5">
+            <Link
+              className="bg-white p-4 rounded-full text-2xl mobile:text-sm"
+              to={"/"}
+            >
+              <span className="font-extrabold text-3xl mobile:text-sm mr-2">
+                +
+              </span>{" "}
+              Add Money to Wallet
             </Link>
           </div>
         </div>
