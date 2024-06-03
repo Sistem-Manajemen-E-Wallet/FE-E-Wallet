@@ -33,7 +33,7 @@ const Home = () => {
           <div className="mobile:mt-5">
             <Link
               className="bg-white p-4 rounded-full text-2xl mobile:text-sm"
-              to={"/"}
+              to={"/top-up"}
             >
               <span className="font-extrabold text-3xl mobile:text-sm mr-2">
                 +
