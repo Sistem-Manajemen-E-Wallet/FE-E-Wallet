@@ -1,10 +1,12 @@
 import { ImageFood, ImageUser } from "@/assets/image";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
 const DetailFood = () => {
   const [count, setCount] = useState(1);
   const pricePerItem = 20000;
+  const navigate = useNavigate();
 
   const increment = () => {
     setCount(count + 1);
@@ -15,6 +17,12 @@ const DetailFood = () => {
       setCount(count - 1);
     }
   };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    navigate("/checkout");
+  };
+
   return (
     <section className="relative overflow-auto h-screen py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
@@ -72,7 +80,10 @@ const DetailFood = () => {
                     Total Harga: Rp. {numberWithCommas(pricePerItem * count)}
                   </span>
                 </div>
-                <button className="p-2 bg-[#464BD8] hover:bg-[#464BD8]/80 rounded text-white">
+                <button
+                  onClick={(e) => handleSubmit(e)}
+                  className="p-2 bg-[#464BD8] hover:bg-[#464BD8]/80 rounded text-white"
+                >
                   Checkout
                 </button>
               </div>

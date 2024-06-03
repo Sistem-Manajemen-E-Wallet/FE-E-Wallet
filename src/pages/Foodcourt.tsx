@@ -1,3 +1,5 @@
+import { FoodcourtComp } from "@/components";
+
 const Foodcourt = () => {
   return (
     <section className="relative overflow-auto h-screen py-32">
@@ -37,7 +39,18 @@ const Foodcourt = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 mt-6"></div>
+        <div className="grid mobile:grid-cols-2 grid-cols-4 gap-6 p-6 mt-6">
+          <FoodcourtComp key={1} name="Pecel Lele" price={20000} />
+          <FoodcourtComp key={1} name="Pecel Ayam" price={10000} />
+          <FoodcourtComp key={1} name="Nasi Uduk" price={13000} />
+          <FoodcourtComp key={1} name="Gorengan" price={2000} />
+          <FoodcourtComp key={1} name="Ikan Kakap" price={28000} />
+          <FoodcourtComp key={1} name="Batagor" price={9000} />
+          <FoodcourtComp key={1} name="Somay" price={10000} />
+          <FoodcourtComp key={1} name="Ikan glowfish" price={2500} />
+          <FoodcourtComp key={1} name="Ikan Koki" price={15000} />
+          <FoodcourtComp key={1} name="Ikan gurame" price={30000} />
+        </div>
       </div>
     </section>
   );

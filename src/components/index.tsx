@@ -1,4 +1,5 @@
 import Carousel from "./Carousel";
 import Menu from "./Menu";
 import HistoryComp from "./HistoryComp";
-export { Carousel, Menu, HistoryComp };
+import FoodcourtComp from "./Product";
+export { Carousel, Menu, HistoryComp, FoodcourtComp };
