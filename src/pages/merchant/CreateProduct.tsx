@@ -52,7 +52,7 @@ const CreateProduct = () => {
           />
         </div>
 
-        <button className="rounded border-0 bg-primary-first py-2 px-6 text-lg text-white hover:bg-primary-first/80 focus:outline-none">
+        <button className="rounded border-0 bg-[#464BD8] py-2 px-6 text-lg text-white hover:bg-[#464BD8]/80 focus:outline-none">
           Submit
         </button>
       </div>

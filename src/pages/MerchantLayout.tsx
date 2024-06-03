@@ -162,7 +162,7 @@ const MerchantLayout: React.FC = () => {
           onClick={toggleSidebar}
           aria-controls="logo-sidebar"
           type="button"
-          className="tablet:inline-flex mobile:inline-flex hidden items-center p-2 mt-4 ms-3 text-sm bg-primary-first hover:bg-primary-first/80 text-white rounded-menu"
+          className="tablet:inline-flex mobile:inline-flex hidden items-center p-2 mt-4 ms-3 text-sm bg-[#464BD8] hover:bg-[#464BD8]/80 text-white rounded-menu"
         >
           Open menu
         </button>
