@@ -1,0 +1,194 @@
+import { useRef, useState, useEffect } from "react";
+import { FilterIcon, SearchIcon } from "../../components/icons/Index";
+
+const Transaction = () => {
+  const [isDropdownFilterOpen, setIsDropdownFilterOpen] = useState(false);
+  const [isUpdateStatusDropdownOpen, setIsUpdateStatusDropdownOpen] =
+    useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const updateStatusDropdownRef = useRef<HTMLDivElement>(null);
+
+  const toggleDropdown = () => {
+    setIsDropdownFilterOpen(!isDropdownFilterOpen);
+  };
+
+  const toggleAnotherDropdown = () => {
+    setIsUpdateStatusDropdownOpen(!isUpdateStatusDropdownOpen);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsDropdownFilterOpen(false);
+    }
+    if (
+      updateStatusDropdownRef.current &&
+      !updateStatusDropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsUpdateStatusDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div>
+      <div className="relative mobile:rounded-xl my-6">
+        <div className="flex flex-column mobile:flex-row flex-wrap space-y-4 mobile:space-y-0 items-center justify-between pb-4">
+          <div>
+            <div className="relative inline-block text-left" ref={dropdownRef}>
+              <button
+                id="dropdownDefaultButton"
+                data-dropdown-toggle="dropdown"
+                className="inline-flex gap-2 items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded text-sm px-3 py-1.5"
+                type="button"
+                onClick={toggleDropdown}
+              >
+                <FilterIcon />
+                Filter
+              </button>
+
+              {isDropdownFilterOpen && (
+                <div
+                  id="dropdown"
+                  className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute mt-2"
+                >
+                  <ul
+                    className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownDefaultButton"
+                  >
+                    <li>
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+                        Progress
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+                        Created at
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+          <label htmlFor="transaction-search" className="sr-only">
+            Search
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
+              <SearchIcon />
+            </div>
+            <input
+              type="text"
+              id="transaction-search"
+              className="block p-2 ps-10 text-sm text-neutral-600 border border-gray-300 rounded w-80 bg-white"
+              placeholder="Search for transaction"
+            />
+          </div>
+        </div>
+
+        <table className="w-full text-sm text-left text-gray-500 rounded shadow border">
+          <thead className="text-xs text-gray-700 uppercase bg-white border-b">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Order id
+              </th>
+              <th scope="col" className="px-6 py-3">
+                User
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Product
+              </th>
+              <th scope="col" className="px-6 py-3">
+                qty
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Subtotal
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Progress
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <td className="px-6 py-4">12</td>
+              <td className="px-6 py-4">Seseorang</td>
+              <td className="px-6 py-4">Pecel lele</td>
+              <td className="px-6 py-4">1</td>
+              <td className="px-6 py-4">Rp. 20.000</td>
+              <td className="px-6 py-4">
+                <div
+                  className="relative inline-block text-left"
+                  ref={updateStatusDropdownRef}
+                >
+                  <button
+                    id="anotherDropdownDefaultButton"
+                    data-dropdown-toggle="dropdown"
+                    className="inline-flex gap-2 items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded text-sm px-3 py-1.5"
+                    type="button"
+                    onClick={toggleAnotherDropdown}
+                  >
+                    Sedang dimasak
+                  </button>
+
+                  {isUpdateStatusDropdownOpen && (
+                    <div
+                      id="updateStatusDropdown"
+                      className="z-10 bg-white rounded-lg shadow w-44 absolute mt-2"
+                    >
+                      <ul
+                        className="text-sm text-gray-700"
+                        aria-labelledby="updateStatusDropdown"
+                      >
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 hover:bg-gray-100 border-b"
+                          >
+                            Sedang dimasak
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 hover:bg-gray-100 border-b"
+                          >
+                            Sedang diantar
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 hover:bg-gray-100 border-b"
+                          >
+                            Sudah diantar
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </td>
+              <td className="px-6 py-4">Success</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default Transaction;

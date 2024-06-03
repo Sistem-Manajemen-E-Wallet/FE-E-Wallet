@@ -15,6 +15,9 @@ import LogoHome from "./home.svg";
 import LogoHistory from "./history.svg";
 import LogoUser from "./user.svg";
 import LogoLogout from "./log-out.svg";
+import LogoDelete from "./delete.svg";
+import LogoEdit from "./edit.svg";
+import LogoSuccess from "./success.svg";
 
 export {
   FoodCourt,
@@ -34,4 +37,7 @@ export {
   LogoHistory,
   LogoUser,
   LogoLogout,
+  LogoDelete,
+  LogoEdit,
+  LogoSuccess,
 };
