@@ -10,8 +10,8 @@ import {
   WalletIcon,
 } from "../components/icons/Index";
 
-import Logo from "../assets/logo/logo.svg";
-import profilePicture from "../assets/images.png";
+import { LogoIcon } from "@/assets/logo";
+import { ImageUser } from "@/assets/image";
 
 const MerchantLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -57,7 +57,7 @@ const MerchantLayout: React.FC = () => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-white shadow-md shadow-neutral-400">
           <div className="flex flex-col items-center justify-center">
             <Link to="/merchant" className="flex flex-col items-center my-5">
-              <img src={Logo} alt="logo" height={60} width={60} />
+              <img src={LogoIcon} alt="logo" height={60} width={60} />
               <span className="self-center text-lg font-medium whitespace-nowrap text-neutral-600">
                 Altapay | Merchant
               </span>
@@ -178,7 +178,7 @@ const MerchantLayout: React.FC = () => {
             <div className="flex items-center">
               <img
                 className="w-10 h-10 me-4 rounded-full"
-                src={profilePicture}
+                src={ImageUser}
                 alt=""
               />
 

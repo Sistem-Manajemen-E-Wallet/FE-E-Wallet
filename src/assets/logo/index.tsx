@@ -1,3 +1,4 @@
+import LogoIcon from "./logo.svg";
 import FoodCourt from "./food.svg";
 import Ticketing from "./ticketing.svg";
 import PulseData from "./pulse.svg";
@@ -20,6 +21,7 @@ import LogoEdit from "./edit.svg";
 import LogoSuccess from "./success.svg";
 
 export {
+  LogoIcon,
   FoodCourt,
   Ticketing,
   PulseData,

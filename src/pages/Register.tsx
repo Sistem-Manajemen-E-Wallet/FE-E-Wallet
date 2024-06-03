@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import Logo from "../assets/logo/logo.svg";
-import Customer from "../assets/customer.webp";
-import Merchant from "../assets/store.webp";
 import { useState } from "react";
+import { LogoIcon } from "@/assets/logo";
+import { ImageCustomer, ImageStore } from "@/assets/image";
 
 const Register = () => {
   const [role, setRole] = useState<string>("");
@@ -12,7 +11,7 @@ const Register = () => {
       <div className="flex flex-col justify-center items-center container lg:px-96 md:px-64 sm:px-32 xs:px-24">
         <div className="py-3 px-20 w-full bg-[#F3F6FF] rounded-xl">
           <div className="flex justify-center">
-            <img src={Logo} className="flex justify-center mb-2" />
+            <img src={LogoIcon} className="flex justify-center mb-2" />
           </div>
           <form className="flex flex-col gap-3">
             <div className="space-y-3">
@@ -30,7 +29,7 @@ const Register = () => {
                       <div className="flex flex-col space-x-3 space-y-0 p-3">
                         <div className="flex flex-col items-center justify-center font-bold text-lg lg:text-xl">
                           <img
-                            src={Customer}
+                            src={ImageCustomer}
                             alt="Customer"
                             className="w-16 pb-3"
                           />
@@ -49,7 +48,7 @@ const Register = () => {
                       <div className="flex flex-col space-x-3 space-y-0 p-3">
                         <div className="flex flex-col items-center justify-center font-bold text-lg lg:text-xl">
                           <img
-                            src={Merchant}
+                            src={ImageStore}
                             alt="Merchant"
                             className="w-16 pb-3"
                           />
