@@ -1,3 +1,4 @@
 import Carousel from "./Carousel";
 import Menu from "./Menu";
-export { Carousel, Menu };
+import HistoryComp from "./HistoryComp";
+export { Carousel, Menu, HistoryComp };

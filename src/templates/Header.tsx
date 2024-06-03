@@ -37,7 +37,7 @@ const Header = () => {
                     <p>Home</p>
                   </NavLink>
                   <NavLink
-                    to={"/"}
+                    to={"/history"}
                     className="flex px-4 py-2 hover:bg-gray-100"
                   >
                     <div className="w-8 h-8 bg-secondary-first flex justify-center items-center rounded-full mr-2">
@@ -46,7 +46,7 @@ const Header = () => {
                     <p>History</p>
                   </NavLink>
                   <NavLink
-                    to={"/"}
+                    to={"/profile"}
                     className="flex px-4 py-2 hover:bg-gray-100"
                   >
                     <div className="w-8 h-8 bg-secondary-first flex justify-center items-center rounded-full mr-2">

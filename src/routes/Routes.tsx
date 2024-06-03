@@ -9,6 +9,7 @@ import MerchantHome from "../pages/merchant/Home";
 import Product from "../pages/merchant/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import History from "../pages/History";
 import CreateProduct from "../pages/merchant/CreateProduct";
 import EditProduct from "../pages/merchant/EditProduct";
 
@@ -20,6 +21,7 @@ const Routes = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/product-list" element={<Foodcourt />} />
         <Route path="/product-detail" element={<DetailFood />} />
+        <Route path="/history" element={<History />} />
       </Route>
       <Route path="/merchant" element={<MerchantLayout />}>
         <Route index element={<MerchantHome />} />
