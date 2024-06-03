@@ -1,6 +1,7 @@
 import { useState } from "react";
 import foodImage from "../assets/food.png";
 import merchantImage from "../assets/images.png";
+import { numberWithCommas } from "../utils/hooks/usePrice";
 
 const DetailFood = () => {
   const [count, setCount] = useState(1);
@@ -52,14 +53,14 @@ const DetailFood = () => {
               </div>
             </div>
             <span className="font-semibold text-2xl text-neutral-700">
-              Rp. 20.000
+              Rp. {numberWithCommas(200000)}
             </span>
             <hr className="h-px my-8 bg-gray-200 border-0" />
             <div className="shadow border rounded p-4 flex justify-between items-center">
               <div className="space-y-2">
                 <div>
                   <span className="font-semibold text-xl text-neutral-700">
-                    Harga Satuan: Rp. {pricePerItem}
+                    Harga Satuan: Rp. {numberWithCommas(pricePerItem)}
                   </span>
                 </div>
                 <div>
@@ -69,7 +70,7 @@ const DetailFood = () => {
                 </div>
                 <div>
                   <span className="font-semibold text-xl text-neutral-700">
-                    Total Harga: Rp. {pricePerItem * count}
+                    Total Harga: Rp. {numberWithCommas(pricePerItem * count)}
                   </span>
                 </div>
                 <button className="p-2 bg-[#464BD8] hover:bg-[#464BD8]/80 rounded text-white">
