@@ -1,3 +1,4 @@
+import { ImageBCA } from "@/assets/image";
 import {
   Accordion,
   AccordionContent,
@@ -6,7 +7,6 @@ import {
 } from "@/components/ui/accordion";
 import { Copy } from "lucide-react";
 import { Link } from "react-router-dom";
-import BCA from "../assets/BCA.png";
 
 const TransactionPending = () => {
   return (
@@ -38,7 +38,7 @@ const TransactionPending = () => {
                 <div className="flex flex-col space-y-4">
                   <p className="font-semibold">Transfer to :</p>
                   <div className="flex gap-3 items-center">
-                    <img className="h-5 w-14" src={BCA} />
+                    <img className="h-5 w-14" src={ImageBCA} />
                     <p className="font-semibold">BCA Virtual Account</p>
                   </div>
                   <div className="flex items-center gap-3 border-2">

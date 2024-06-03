@@ -1,4 +1,4 @@
-import profileImage from "../../assets/stand_pecel.jpeg";
+import { ImageStandPecel } from "@/assets/image";
 
 const Profile = () => {
   return (
@@ -8,7 +8,7 @@ const Profile = () => {
           <img
             className="shadow border absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
             loading="lazy"
-            src={profileImage}
+            src={ImageStandPecel}
           />
         </div>
         <div className="flex flex-col gap-2 py-2">

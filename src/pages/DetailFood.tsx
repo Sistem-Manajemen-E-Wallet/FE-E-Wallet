@@ -1,6 +1,5 @@
+import { ImageFood, ImageUser } from "@/assets/image";
 import { useState } from "react";
-import foodImage from "../assets/food.png";
-import merchantImage from "../assets/images.png";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
 const DetailFood = () => {
@@ -24,7 +23,7 @@ const DetailFood = () => {
             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
               <img
                 className="w-full h-full object-cover"
-                src={foodImage}
+                src={ImageFood}
                 alt="Product Image"
               />
             </div>
@@ -44,7 +43,7 @@ const DetailFood = () => {
             <div className="flex items-center">
               <img
                 className="w-10 h-10 me-4 rounded-full"
-                src={merchantImage}
+                src={ImageUser}
                 alt=""
               />
 

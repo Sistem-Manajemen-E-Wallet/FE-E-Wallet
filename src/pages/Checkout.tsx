@@ -1,5 +1,5 @@
+import { ImageFood } from "@/assets/image";
 import { Link } from "react-router-dom";
-import foodImage from "../assets/food.png";
 import { LogoDelete, LogoEdit, LogoUser } from "../assets/logo";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
@@ -9,7 +9,7 @@ const Checkout = () => {
       <div className="container">
         <p className="mb-5 text-2xl font-bold">Checkout</p>
         <div className="grid grid-flow-col grid-cols-3 gap-5">
-          <img src={foodImage} alt="food" className="h-52 w-full" />
+          <img src={ImageFood} alt="food" className="h-52 w-full" />
           <div>
             <p className="text-3xl font-extralight mb-4">Pecel Lele</p>
             <div className="flex gap-2 items-center mb-2">

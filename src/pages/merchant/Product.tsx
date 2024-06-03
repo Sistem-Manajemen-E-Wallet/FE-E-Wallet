@@ -1,5 +1,5 @@
+import { ImageFood } from "@/assets/image";
 import { Link } from "react-router-dom";
-import foodImage from "../../assets/food.png";
 
 const Product = () => {
   return (
@@ -24,7 +24,7 @@ const Product = () => {
             <img
               className="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
               loading="lazy"
-              src={foodImage}
+              src={ImageFood}
             />
           </div>
           <div className="flex flex-col gap-2 py-2">
@@ -48,7 +48,7 @@ const Product = () => {
             <img
               className="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
               loading="lazy"
-              src={foodImage}
+              src={ImageFood}
             />
           </div>
           <div className="flex flex-col gap-2 py-2">
