@@ -1,36 +1,121 @@
-import { Link } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, LoginType, userLogin } from "@/utils/api/auth";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo/logo.svg";
+import { Form, FormField } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import Cookies from "js-cookie";
 
 const Login = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const form = useForm<LoginType>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      phone_number: "",
+      pin: "",
+    },
+  });
+
+  async function onSubmit(data: LoginType) {
+    try {
+      const result = await userLogin(data);
+      if (result.statusCode == 200) {
+        toast({
+          description: `Hello, ${result.data.data.name} welcome back!`,
+        });
+        const tokenBase64 = btoa(result.data.data.token);
+        Cookies.set("token", tokenBase64, { expires: 2 });
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      toast({
+        title: "Oops! Something went wrong.",
+        description: (error as Error).message,
+        variant: "destructive",
+      });
+    }
+  }
+
   return (
-    <section className="flex flex-col w-full h-screen justify-center bg-[#464BD8]">
-      <div className="flex flex-col justify-center items-center container lg:px-96 md:px-64 sm:px-32 xs:px-24">
-        <div className="p-20 w-full bg-[#F3F6FF] rounded-xl">
+    <section className="flex h-screen items-center justify-center bg-primary-first">
+      <div className="container">
+        <div className="p-20 mobile:p-5 w-full bg-[#F3F6FF] rounded-xl">
           <div className="flex justify-center">
             <img src={Logo} className="flex justify-center mb-5" />
           </div>
-          <form className="flex flex-col gap-3">
-            <div className="mb-6">
-              <input
-                type="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="phone number"
-              />
-            </div>
-            <div className="mb-6">
-              <input
-                type="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="pin"
-              />
-            </div>
-            <button
-              type="submit"
-              className="text-white bg-[#464BD8] hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+          <Form {...form}>
+            <form
+              data-testid="form-login"
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-3"
             >
-              Sign In
-            </button>
-          </form>
+              <div className="mb-6">
+                <FormField
+                  control={form.control}
+                  name="phone_number"
+                  render={({ field }) => (
+                    <Input
+                      data-testid="input-phone"
+                      placeholder="08xxxxxxxx"
+                      type="text"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                      {...field}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                  )}
+                />
+              </div>
+              <div className="mb-6">
+                <FormField
+                  control={form.control}
+                  name="pin"
+                  render={({ field }) => (
+                    <Input
+                      data-testid="input-pin"
+                      placeholder="******"
+                      min={6}
+                      type="password"
+                      disabled={form.formState.isSubmitting}
+                      aria-disabled={form.formState.isSubmitting}
+                      {...field}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                  )}
+                />
+              </div>
+              <Button
+                data-testid="btn-submit"
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+                className="text-white bg-primary-first hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              >
+                {form.formState.isSubmitting ? (
+                  <>
+                    <div
+                      className="inline-block mr-2 h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] text-white dark:text-white"
+                      role="status"
+                    ></div>
+                    Loading
+                  </>
+                ) : (
+                  "Sign In"
+                )}
+              </Button>
+              {/* <button
+                type="submit"
+                className="text-white bg-[#464BD8] hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+              >
+                Sign In
+              </button> */}
+            </form>
+          </Form>
           <p className="text-end">
             <Link to={""} className="text-sm text-[#737373] hover:text-black">
               Forgot Password?

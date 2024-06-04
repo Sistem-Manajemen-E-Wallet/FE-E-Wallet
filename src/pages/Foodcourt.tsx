@@ -8,8 +8,8 @@ const Foodcourt = () => {
           <span className="text-neutral-600 text-3xl font-bold">Foodcourt</span>
         </div>
 
-        <div className="flex justify-between">
-          <h5 className="text-neutral-700 font-bold text-xl">
+        <div className="flex mobile:block justify-between">
+          <h5 className="text-neutral-700 font-bold text-xl mobile:mb-2">
             What would your like to eat ?
           </h5>
           <div className="relative">
@@ -39,7 +39,7 @@ const Foodcourt = () => {
           </div>
         </div>
 
-        <div className="grid mobile:grid-cols-2 grid-cols-4 gap-6 p-6 mt-6">
+        <div className="grid mobile:grid-cols-2 grid-cols-4 gap-2 p-0 mt-6">
           <FoodcourtComp key={1} name="Pecel Lele" price={20000} />
           <FoodcourtComp key={1} name="Pecel Ayam" price={10000} />
           <FoodcourtComp key={1} name="Nasi Uduk" price={13000} />
