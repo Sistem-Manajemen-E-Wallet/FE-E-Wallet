@@ -8,7 +8,7 @@ const Checkout = () => {
     <section className="relative p-0 overflow-auto h-screen py-40 bg-primary-secound">
       <div className="container">
         <p className="mb-5 text-2xl font-bold">Checkout</p>
-        <div className="grid grid-flow-col grid-cols-3 gap-5">
+        <div className="grid grid-flow-col grid-cols-3 gap-5 mobile:block">
           <img src={ImageFood} alt="food" className="h-52 w-full" />
           <div>
             <p className="text-3xl font-extralight mb-4">Pecel Lele</p>
@@ -21,7 +21,7 @@ const Checkout = () => {
             <p className="font-extralight mb-2">
               Category <span className="font-bold">Food Court</span>
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 mobile:mb-3">
               <div className="bg-white rounded-full p-1">
                 <img src={LogoEdit} alt="edit" width={30} height={30} />
               </div>
@@ -52,7 +52,7 @@ const Checkout = () => {
         <hr className="h-px border-t-0 bg-black mt-2" />
         <p className="mt-5 mb-2 font-semibold">Note</p>
         <textarea
-          className="bg-white w-1/2 rounded-xl h-36 shadow-2xl shadow-gray-500 p-3"
+          className="bg-white w-1/2 mobile:w-full rounded-xl h-36 shadow-2xl shadow-gray-500 p-3"
           placeholder="Add Pedes Level 10 ..."
         ></textarea>
       </div>
