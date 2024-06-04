@@ -1,12 +1,38 @@
+import { userProfile } from "@/utils/api/users";
 import { atom, useAtom } from "jotai";
+import Cookies from "js-cookie";
+import { useCallback, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { LogoHistory, LogoHome, LogoLogout } from "../assets/logo";
 import Logo from "../assets/logo/logo.svg";
 
 const isOpenAtom = atom(false);
+const userAtom = atom({
+  name: "",
+  email: "",
+  role: "",
+  profile_picture: "",
+});
 
 const Header = () => {
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
+  const token = Cookies.get("token");
+  const [users, setUsers] = useAtom(userAtom);
+
+  const getProfiles = useCallback(async () => {
+    const response = await userProfile();
+    if (response.statusCode == 200) {
+      setUsers(response.data.data);
+    } else {
+      Cookies.remove("token");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      getProfiles();
+    }
+  }, []);
 
   return (
     <header className="fixed top-0 z-10 border-gray-600 bg-white w-screen rounded-br-3xl rounded-bl-3xl shadow-lg shadow-gray-500">
@@ -19,7 +45,7 @@ const Header = () => {
             className="text-xl mr-5 select-none"
             onClick={() => setIsOpen(!isOpen)}
           >
-            Hi, <span className="font-bold">Mikhael</span>
+            Hi, <span className="font-bold">{users.name}</span>
             {isOpen && (
               <div
                 className={`z-10 absolute mt-1 ${

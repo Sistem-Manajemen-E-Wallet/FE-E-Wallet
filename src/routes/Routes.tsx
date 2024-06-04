@@ -19,32 +19,37 @@ import Checkout from "../pages/Checkout";
 import VerifyPin from "../pages/VerifyPin";
 import PaymentStatus from "../pages/PaymentStatus";
 import MerchantProfile from "../pages/merchant/Profile";
+import ProtectedRoute from "./ProtectedRoute";
+import NoPage from "@/pages/NoPage";
 
 const Routes = () => {
   return (
     <Router>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/product-list" element={<Foodcourt />} />
-        <Route path="/product-detail" element={<DetailFood />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/top-up" element={<TopUp />} />
-        <Route path="/top-up-detail" element={<TransactionPending />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/verify-pin" element={<VerifyPin />} />
-        <Route path="/payment-detail" element={<PaymentStatus />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/product-list" element={<Foodcourt />} />
+          <Route path="/product-detail" element={<DetailFood />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/top-up" element={<TopUp />} />
+          <Route path="/top-up-detail" element={<TransactionPending />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/verify-pin" element={<VerifyPin />} />
+          <Route path="/payment-detail" element={<PaymentStatus />} />
+        </Route>
+        <Route path="/merchant" element={<MerchantLayout />}>
+          <Route index element={<MerchantHome />} />
+          <Route path="/merchant/profile" element={<MerchantProfile />} />
+          <Route path="/merchant/products" element={<Product />} />
+          <Route path="/merchant/product/create" element={<CreateProduct />} />
+          <Route path="/merchant/product/edit" element={<EditProduct />} />
+          <Route path="/merchant/transactions" element={<Transaction />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Route>
-      <Route path="/merchant" element={<MerchantLayout />}>
-        <Route index element={<MerchantHome />} />
-        <Route path="/merchant/profile" element={<MerchantProfile />} />
-        <Route path="/merchant/products" element={<Product />} />
-        <Route path="/merchant/product/create" element={<CreateProduct />} />
-        <Route path="/merchant/product/edit" element={<EditProduct />} />
-        <Route path="/merchant/transactions" element={<Transaction />} />
-      </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="*" element={<NoPage />} />
     </Router>
   );
 };
