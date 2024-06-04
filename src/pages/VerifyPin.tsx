@@ -33,7 +33,7 @@ const VerifyPin = () => {
   return (
     <section className="mt-80">
       <div className="container">
-        <div className="flex justify-center items-center gap-10">
+        <div className="flex justify-center items-center gap-5">
           {pin.map((digit, index) => (
             <input
               key={index}
@@ -43,7 +43,7 @@ const VerifyPin = () => {
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               maxLength={1}
-              className="border border-black rounded-xl w-24 h-24 text-center font-extrabold text-2xl shadow-sm shadow-black"
+              className="border border-black rounded-xl w-24 h-24 text-center font-extrabold text-2xl shadow-sm shadow-black mobile:w-10 mobile:h-10"
             />
           ))}
         </div>
