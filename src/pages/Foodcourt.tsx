@@ -1,6 +1,31 @@
-import { FoodcourtComp } from "@/components";
+import { FoodcourtComp, LoadingProduct } from "@/components";
+import { Daum, getAllProduct } from "@/utils/api/product";
+import { atom, useAtom } from "jotai";
+import { useCallback, useEffect } from "react";
+
+const productAtom = atom<Daum[]>([]);
+const loadingAtom = atom(true);
 
 const Foodcourt = () => {
+  const [products, setProducts] = useAtom(productAtom);
+  const [loading, isLoading] = useAtom(loadingAtom);
+
+  // Call API Product
+  const getProducts = useCallback(async () => {
+    isLoading(true);
+    const response = await getAllProduct();
+    if (response.statusCode == 200) {
+      isLoading(false);
+      setProducts(response.data.data);
+    } else {
+      isLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
+
   return (
     <section className="relative overflow-auto h-screen py-32">
       <div className="container">
@@ -40,16 +65,23 @@ const Foodcourt = () => {
         </div>
 
         <div className="grid mobile:grid-cols-2 grid-cols-4 gap-2 p-0 mt-6">
-          <FoodcourtComp key={1} name="Pecel Lele" price={20000} />
-          <FoodcourtComp key={1} name="Pecel Ayam" price={10000} />
-          <FoodcourtComp key={1} name="Nasi Uduk" price={13000} />
-          <FoodcourtComp key={1} name="Gorengan" price={2000} />
-          <FoodcourtComp key={1} name="Ikan Kakap" price={28000} />
-          <FoodcourtComp key={1} name="Batagor" price={9000} />
-          <FoodcourtComp key={1} name="Somay" price={10000} />
-          <FoodcourtComp key={1} name="Ikan glowfish" price={2500} />
-          <FoodcourtComp key={1} name="Ikan Koki" price={15000} />
-          <FoodcourtComp key={1} name="Ikan gurame" price={30000} />
+          {loading ? (
+            <>
+              <LoadingProduct />
+              <LoadingProduct />
+              <LoadingProduct />
+              <LoadingProduct />
+            </>
+          ) : (
+            products.map((product, id) => (
+              <FoodcourtComp
+                key={id}
+                name={product.product_name}
+                price={product.price}
+                image={product.product_images}
+              />
+            ))
+          )}
         </div>
       </div>
     </section>

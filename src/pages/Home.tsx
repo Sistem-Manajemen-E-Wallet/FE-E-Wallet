@@ -1,3 +1,7 @@
+import { userWallet } from "@/utils/api/wallet";
+import { numberWithCommas } from "@/utils/hooks/usePrice";
+import { atom, useAtom } from "jotai";
+import { useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -16,7 +20,27 @@ import {
 } from "../assets/logo";
 import { Carousel, Menu } from "../components";
 
+const walletAtom = atom(0);
+const loadingAtom = atom(true);
+
 const Home = () => {
+  const [wallets, setWallets] = useAtom(walletAtom);
+  const [loading, isLoading] = useAtom(loadingAtom);
+
+  // Call API Wallet
+  const getWallet = useCallback(async () => {
+    isLoading(true);
+    const response = await userWallet();
+    if (response.statusCode == 200) {
+      isLoading(false);
+      setWallets(response.data.data.Balance);
+    }
+  }, []);
+
+  useEffect(() => {
+    getWallet();
+  }, [getWallet]);
+
   return (
     <section className="relative p-0 overflow-auto h-screen py-32">
       {/* Information Wallet */}
@@ -24,7 +48,11 @@ const Home = () => {
         <div className="bg-primary-first mt-10 rounded-full py-10 px-10 flex mobile:block justify-between items-center w-full mobile:text-center">
           <div>
             <p className="font-bold text-white text-3xl mb-2 mobile:text-center">
-              Rp. 20,000,0000
+              {loading ? (
+                <div className="h-10 bg-slate-300 rounded-xl w-full mx-auto animate-pulse"></div>
+              ) : (
+                `Rp ` + numberWithCommas(wallets)
+              )}
             </p>
             <p className="font-light text-white text-xs">
               Current AltaPay Wallet Balance
