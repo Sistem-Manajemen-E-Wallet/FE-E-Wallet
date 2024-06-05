@@ -12,12 +12,13 @@ export interface Meta {
 }
 
 export interface Daum {
-  id: number;
-  user_id: number;
-  product_name: string;
-  description: string;
-  price: number;
-  product_images: string;
-  created_at: string;
-  updated_at: string;
+  id?: number;
+  user_id?: number;
+  merchant_name?: string;
+  product_name?: string;
+  description?: string;
+  price?: number;
+  product_images?: string;
+  created_at?: string;
+  updated_at?: string;
 }

@@ -6,15 +6,24 @@ const ProtectedRoute = () => {
   const token = Cookies.get("token");
 
   const authProtected = ["/login", "/register"];
-  const protectedByToken = ["/", "/profile"];
+  const protectedByToken = [
+    "/",
+    "/profile",
+    "/product-list",
+    /^\/product-detail\/\d+$/,
+  ];
   // const adminProtected = ["/merchant"];
 
   if (authProtected.includes(pathname)) {
     if (token) return <Navigate to={"/"} />;
   }
 
-  if (protectedByToken.includes(pathname)) {
-    if (!token) return <Navigate to={"/login"} />;
+  const isProtectedByToken = protectedByToken.some((route) =>
+    route instanceof RegExp ? route.test(pathname) : route === pathname
+  );
+
+  if (isProtectedByToken) {
+    if (!token) return <Navigate to="/login" />;
   }
 
   return <Outlet />;

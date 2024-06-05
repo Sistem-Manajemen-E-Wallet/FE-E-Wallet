@@ -1,5 +1,5 @@
-import { getAllProduct } from "./api";
+import { getAllProduct, getSingleProduct } from "./api";
 import { ProductResponse, Daum } from "./types";
 
-export { getAllProduct };
+export { getAllProduct, getSingleProduct };
 export type { ProductResponse, Daum };
