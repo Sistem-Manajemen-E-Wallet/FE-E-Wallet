@@ -1,10 +1,15 @@
 import { numberWithCommas } from "@/utils/hooks/usePrice";
 import { Link } from "react-router-dom";
 
-const Product = (props: { name: string; price: number; image: string }) => {
+const Product = (props: {
+  routes: string;
+  name?: string;
+  price?: number;
+  image?: string;
+}) => {
   return (
     <Link
-      to={"/product-detail"}
+      to={`/product-detail/${props.routes}`}
       className="p-3 max-w-lg border border-gray-300 rounded-2xl hover:shadow-xl hover:shadow-gray-100 flex flex-col items-start"
     >
       <img

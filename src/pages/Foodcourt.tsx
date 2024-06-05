@@ -76,6 +76,7 @@ const Foodcourt = () => {
             products.map((product, id) => (
               <FoodcourtComp
                 key={id}
+                routes={product.id?.toString() || ""}
                 name={product.product_name}
                 price={product.price}
                 image={product.product_images}

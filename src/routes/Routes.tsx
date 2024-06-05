@@ -30,7 +30,7 @@ const Routes = () => {
           <Route index element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/product-list" element={<Foodcourt />} />
-          <Route path="/product-detail" element={<DetailFood />} />
+          <Route path="/product-detail/:id" element={<DetailFood />} />
           <Route path="/history" element={<History />} />
           <Route path="/top-up" element={<TopUp />} />
           <Route path="/top-up-detail" element={<TransactionPending />} />

@@ -1,25 +1,63 @@
-import { ImageFood } from "@/assets/image";
-import { Link } from "react-router-dom";
+import { userWallet } from "@/utils/api/wallet";
+import { atom, useAtom } from "jotai";
+import { useCallback, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { LogoDelete, LogoEdit, LogoUser } from "../assets/logo";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
+const walletAtom = atom(0);
 const Checkout = () => {
+  const location = useLocation();
+  const state = location.state;
+
+  const [wallets, setWallets] = useAtom(walletAtom);
+
+  // Call API Wallet
+  const getWallet = useCallback(async () => {
+    const response = await userWallet();
+    if (response.statusCode == 200) {
+      setWallets(response.data.data.Balance);
+    }
+  }, []);
+
+  useEffect(() => {
+    getWallet();
+  }, [getWallet]);
+
+  const handleCheckout = () => {
+    if (wallets > state.dataCheckout.price) {
+      console.log("deduct");
+    } else {
+      alert("Your wallet balance is insufficient, please top up");
+    }
+  };
   return (
     <section className="relative p-0 overflow-auto h-screen py-40 bg-primary-secound">
       <div className="container">
         <p className="mb-5 text-2xl font-bold">Checkout</p>
         <div className="grid grid-flow-col grid-cols-3 gap-5 mobile:block">
-          <img src={ImageFood} alt="food" className="h-52 w-full" />
+          <img
+            src={state.dataCheckout.product_images}
+            alt="food"
+            className="h-52 w-full"
+          />
           <div>
-            <p className="text-3xl font-extralight mb-4">Pecel Lele</p>
+            <p className="text-3xl font-extralight mb-4">
+              {state.dataCheckout.product_name}
+            </p>
             <div className="flex gap-2 items-center mb-2">
               <div className="bg-yellow-200 rounded-full w-10 h-10 flex items-center justify-center">
                 <img src={LogoUser} alt="user" width={30} height={30} />
               </div>
-              <p className="font-extralight">Toko Kelontong</p>
+              <p className="font-extralight">
+                {state.dataCheckout.merchant_name}
+              </p>
             </div>
             <p className="font-extralight mb-2">
-              Category <span className="font-bold">Food Court</span>
+              Category{" "}
+              <span className="font-bold">
+                {state.dataCheckout.category_food}
+              </span>
             </p>
             <div className="flex gap-3 mobile:mb-3">
               <div className="bg-white rounded-full p-1">
@@ -35,17 +73,22 @@ const Checkout = () => {
             <hr className="h-px border-t-0 bg-black mt-1 mb-2" />
             <div className="flex justify-between mb-1">
               <p>Price</p>
-              <p className="font-bold">Rp. 20,000</p>
+              <p className="font-bold">
+                Rp. {numberWithCommas(state.dataCheckout.price)}
+              </p>
             </div>
             <div className="flex justify-between mb-1">
               <p>Qty</p>
               <p>
-                <span className="font-bold">2 </span>Food(s)
+                <span className="font-bold"> {state.dataCheckout.qty} </span>
+                Food(s)
               </p>
             </div>
             <div className="flex justify-between mb-1">
               <p>Total Cost</p>
-              <p className="font-bold">Rp. 40,000</p>
+              <p className="font-bold">
+                Rp. {numberWithCommas(state.dataCheckout.total_cost)}
+              </p>
             </div>
           </div>
         </div>
@@ -61,14 +104,15 @@ const Checkout = () => {
           <div className="flex justify-between items-center py-5 ">
             <div>
               <p className="font-medium">My Balance</p>
-              <p className="font-bold">Rp. {numberWithCommas(20000000)}</p>
+              <p className="font-bold">Rp. {numberWithCommas(wallets)}</p>
             </div>
-            <Link
-              to={"/verify-pin"}
+            <button
+              // to={"/verify-pin"}
+              onClick={() => handleCheckout()}
               className="bg-primary-first py-2 px-10 rounded-xl"
             >
               <p className="text-white font-bold text-lg">BUY</p>
-            </Link>
+            </button>
           </div>
         </div>
       </div>

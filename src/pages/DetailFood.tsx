@@ -1,11 +1,29 @@
-import { ImageFood, ImageUser } from "@/assets/image";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ImageUser } from "@/assets/image";
+import { Daum, getSingleProduct } from "@/utils/api/product";
+import { atom, useAtom } from "jotai";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
+const detailAtom = atom<Daum>({});
+
 const DetailFood = () => {
+  const params = useParams();
+  const [details, setDetails] = useAtom(detailAtom);
   const [count, setCount] = useState(1);
-  const pricePerItem = 20000;
+
+  // Call API Detail Product
+  const getDetailProduct = useCallback(async () => {
+    const response = await getSingleProduct(params.id!);
+    if (response.statusCode == 200) {
+      setDetails(response.data.data);
+    }
+  }, []);
+
+  useEffect(() => {
+    getDetailProduct();
+  }, [getDetailProduct]);
+
   const navigate = useNavigate();
 
   const increment = () => {
@@ -20,7 +38,22 @@ const DetailFood = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    navigate("/checkout");
+    const dataCheckout = {
+      id_merchant: details.user_id,
+      product_images: details.product_images,
+      product_name: details.product_name,
+      merchant_name: details.merchant_name,
+      category_food: "Food Court",
+      price: details.price,
+      qty: count,
+      total_cost: (details.price ?? 0) * count,
+    };
+
+    navigate("/checkout", {
+      state: {
+        dataCheckout,
+      },
+    });
   };
 
   return (
@@ -32,43 +65,38 @@ const DetailFood = () => {
               <div className="h-[460px] mobile:h-[320px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-2">
                 <img
                   className="w-full h-full object-cover mobile:w-80 mobile:h-80"
-                  src={ImageFood}
+                  src={details.product_images}
                   alt="Product Image"
                 />
               </div>
             </div>
             <div className="md:flex-1 px-4">
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                Pecel lele
+                {details.product_name}
               </h2>
               <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed
-                ante justo. Integer euismod libero id mauris malesuada
-                tincidunt. Lorem ipsum dolor sit amet consectetur, adipisicing
-                elit. Totam accusamus molestias dignissimos quisquam
-                voluptatibus recusandae ratione quo saepe doloribus libero,
-                mollitia et eum soluta est harum? Cum non omnis odio?
+                {details.description}
               </p>
               <div className="flex items-center">
                 <img
                   className="w-7 h-7 me-4 rounded-full"
                   src={ImageUser}
-                  alt=""
+                  alt="imageuser"
                 />
 
                 <div className="font-medium my-6 text-neutral-600">
-                  <p>Pecel lele berkah</p>
+                  <p>{details.merchant_name}</p>
                 </div>
               </div>
               <span className="font-semibold text-2xl text-neutral-700">
-                Rp. {numberWithCommas(200000)}
+                Rp. {numberWithCommas(details.price ?? 0)}
               </span>
               <hr className="h-px my-8 bg-gray-200 border-0" />
               <div className="shadow border rounded p-4 flex justify-between items-center">
                 <div className="space-y-2">
                   <div>
                     <span className="font-semibold text-xl text-neutral-700">
-                      Harga Satuan: Rp. {numberWithCommas(pricePerItem)}
+                      Harga Satuan: Rp. {numberWithCommas(details.price ?? 0)}
                     </span>
                   </div>
                   <div>
@@ -78,7 +106,8 @@ const DetailFood = () => {
                   </div>
                   <div>
                     <span className="font-semibold text-xl text-neutral-700">
-                      Total Harga: Rp. {numberWithCommas(pricePerItem * count)}
+                      Total Harga: Rp.{" "}
+                      {numberWithCommas((details.price ?? 0) * count)}
                     </span>
                   </div>
                   <button
