@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
 
 interface CallAPIProps extends AxiosRequestConfig {
   token?: boolean;
@@ -35,6 +36,9 @@ export default async function callAPI({
     headers,
   }).catch((err) => err.response);
 
+  if (respon.status == 401) {
+    return <Navigate to={"/login"} replace />;
+  }
   if (respon.status > 300) {
     const res = {
       error: true,
