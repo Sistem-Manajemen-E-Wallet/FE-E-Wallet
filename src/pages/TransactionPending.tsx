@@ -1,14 +1,52 @@
-import { ImageBCA } from "@/assets/image";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { topUpPending } from "@/utils/api/topUp/api";
+import { ItopUpPending } from "@/utils/api/topUp/types";
+import { numberWithCommas } from "@/utils/hooks/usePrice";
+import useQuery from "@/utils/hooks/useQuery";
 import { Copy } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+const iconBank = [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1199px-Bank_Central_Asia.svg.png",
+  "https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/300px-BNI_logo.svg.png?20240305030303",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/189px-BANK_BRI_logo.svg.png?20180118061811",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/CIMB_Niaga_logo.svg/1200px-CIMB_Niaga_logo.svg.png",
+];
+
 const TransactionPending = () => {
+  const query = useQuery();
+  const id = query.get("id");
+  const [topUpDetail, setTopUpDetail] = useState<ItopUpPending>();
+
+  const getTopUpDetail = useCallback(async () => {
+    const response = await topUpPending(id);
+    if (response.statusCode === 200) {
+      setTopUpDetail(response.data);
+    }
+  }, [setTopUpDetail]);
+
+  useEffect(() => {
+    getTopUpDetail();
+  }, [getTopUpDetail]);
+
+  const selectIconBank = (bank: string) => {
+    if (bank === "BCA") {
+      return iconBank[0];
+    } else if (bank === "BNI") {
+      return iconBank[1];
+    } else if (bank === "BRI") {
+      return iconBank[2];
+    } else {
+      return iconBank[3];
+    }
+    return "";
+  };
   return (
     <section className="relative overflow-auto h-screen pt-32">
       <div className="py-6 pb-28 bg-slate-100">
@@ -38,18 +76,35 @@ const TransactionPending = () => {
                 <div className="flex flex-col space-y-4">
                   <p className="font-semibold">Transfer to :</p>
                   <div className="flex gap-3 items-center">
-                    <img className="h-5 w-14" src={ImageBCA} />
-                    <p className="font-semibold">BCA Virtual Account</p>
+                    <img
+                      className="h-5 w-22"
+                      src={selectIconBank(
+                        topUpDetail?.data.channel_bank as string
+                      )}
+                    />
+                    <p className="font-semibold">
+                      {topUpDetail?.data.channel_bank} Virtual Account
+                    </p>
                   </div>
                   <div className="flex items-center gap-3 border-2">
                     <input
                       disabled
                       className="w-full bg-[#F4F7FE] rounded-md py-1 px-3 font-bold"
-                      value="4756 6272 7921 4553"
+                      value={topUpDetail?.data.va_numbers}
                     />
                     <Copy
                       onClick={() => {
-                        navigator.clipboard.writeText("4756 6272 7921 4553");
+                        const textToCopy = topUpDetail?.data
+                          .va_numbers as string;
+                        navigator.clipboard
+                          .writeText(textToCopy)
+                          .then(() => {
+                            window.alert("Copied successfully!");
+                          })
+                          .catch((error) => {
+                            console.error("Error copying text: ", error);
+                            window.alert("Copy failed. Please try again.");
+                          });
                       }}
                       className="text-gray-500 cursor-pointer"
                       size={20}
@@ -61,7 +116,7 @@ const TransactionPending = () => {
                   <input
                     disabled
                     className="w-full bg-[#F4F7FE] rounded-md py-1 px-3 font-bold border-2"
-                    value="Rp 100.000"
+                    value={topUpDetail?.data.amount ? `Rp ${numberWithCommas(topUpDetail.data.amount)}` : ''}
                   />
                 </div>
                 <div className="flex flex-col space-y-4">
@@ -106,7 +161,8 @@ const TransactionPending = () => {
                             Pilih
                             <span className="font-semibold text-slate-600 ">
                               {" "}
-                              Ke Rekening BCA Virtual Account
+                              Ke Rekening {topUpDetail?.data.channel_bank}{" "}
+                              Virtual Account
                             </span>
                           </li>
                           <li className="text-slate-500">
@@ -117,7 +173,7 @@ const TransactionPending = () => {
                             , yaitu
                             <span className="font-semibold text-slate-600 ">
                               {" "}
-                              4756 6272 7921 4553
+                              {topUpDetail?.data.va_numbers}
                             </span>
                           </li>
                           <li className="text-slate-500">
@@ -164,7 +220,8 @@ const TransactionPending = () => {
                           <li className="text-slate-500">
                             Pilih{" "}
                             <span className="font-semibold text-slate-600 ">
-                              Transfer ke BCA Virtual Account
+                              Transfer ke {topUpDetail?.data.channel_bank}{" "}
+                              Virtual Account
                             </span>
                           </li>
                           <li className="text-slate-500">
@@ -176,7 +233,7 @@ const TransactionPending = () => {
                             , yaitu
                             <span className="font-semibold text-slate-600 ">
                               {" "}
-                              4756 6272 7921 4553
+                              {topUpDetail?.data.va_numbers}
                             </span>
                           </li>
                           <li className="text-slate-500">
@@ -223,7 +280,7 @@ const TransactionPending = () => {
                           <li className="text-slate-500">
                             Pilih{" "}
                             <span className="font-semibold text-slate-600 ">
-                              BCA Virtual Account
+                              {topUpDetail?.data.channel_bank} Virtual Account
                             </span>
                           </li>
                           <li className="text-slate-500">
@@ -235,7 +292,7 @@ const TransactionPending = () => {
                             , yaitu
                             <span className="font-semibold text-slate-600 ">
                               {" "}
-                              4756 6272 7921 4553
+                              {topUpDetail?.data.va_numbers}
                             </span>
                           </li>
                           <li className="text-slate-500">

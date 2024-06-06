@@ -31,8 +31,8 @@ const TopUp = () => {
 
       const result = await topUp(data);
 
-      console.log("Top-up successful", result);
-      navigate("/top-up-detail");
+      console.log("Top-up successful", result.data.data);
+      navigate(`/top-up-detail?id=${result.data.data.id}`);
     } catch (error) {
       alert("Top-up failed: " + error.message);
     }
