@@ -59,7 +59,8 @@ const ProtectedRoute = () => {
   const isProtectedByToken = isRouteProtected(protectedByToken, pathname);
 
   if (authProtected.includes(pathname)) {
-    if (token) return <Navigate to="/" />;
+    if (token && user.role === "Customer") return <Navigate to="/" />;
+    if (token && user.role === "Merchant") return <Navigate to="/merchant" />;
   }
 
   if (isProtectedByToken) {
