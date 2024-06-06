@@ -4,12 +4,12 @@ interface Transaction {
   TotalCost: number;
 }
 
-interface ApiResponse {
-  data: Transaction[];
-  meta: {
-    totalItems: number;
-  };
-}
+// interface ApiResponse {
+//   data: Transaction[];
+//   meta: {
+//     totalItems: number;
+//   };
+// }
 
 export async function getAllTransaction() {
   try {
