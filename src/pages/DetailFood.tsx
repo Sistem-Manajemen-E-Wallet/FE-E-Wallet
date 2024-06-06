@@ -40,6 +40,7 @@ const DetailFood = () => {
     e.preventDefault();
     const dataCheckout = {
       id_merchant: details.user_id,
+      product_id: details.id,
       product_images: details.product_images,
       product_name: details.product_name,
       merchant_name: details.merchant_name,
