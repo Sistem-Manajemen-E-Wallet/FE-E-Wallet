@@ -1,10 +1,42 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import RadioBank from "../components/Radio";
 import { numberWithCommas } from "@/utils/hooks/usePrice";
-import { Link } from "react-router-dom";
+import { TopUpFormType, topUpSchema } from "@/utils/api/topUp/types";
+import { topUp } from "@/utils/api/topUp/api";
 
 const TopUp = () => {
-  const [selectedValue, setSelectedValue] = useState<string>("default");
+  const [selectedBank, setSelectedBank] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = useForm<TopUpFormType>({
+    resolver: zodResolver(topUpSchema),
+    defaultValues: {
+      amount: 0,
+      channel_bank: "",
+    },
+  });
+
+  const navigate = useNavigate();
+
+  const handleTopUp = async (data: TopUpFormType) => {
+    try {
+      console.log("Top up data", data);
+
+      const result = await topUp(data);
+
+      console.log("Top-up successful", result);
+      navigate("/top-up-detail");
+    } catch (error) {
+      alert("Top-up failed: " + error.message);
+    }
+  };
 
   return (
     <section className="relative overflow-auto h-screen pt-32">
@@ -31,41 +63,53 @@ const TopUp = () => {
           <div>
             <p className="text-2xl font-bold mb-5">Select Method</p>
           </div>
-          <form className="flex gap-20">
+          <form className="flex gap-20" onSubmit={handleSubmit(handleTopUp)}>
             <div className="grid space-y-2">
               <RadioBank
                 id="radio-bank-1"
                 name="topup-method"
-                value="bank1"
-                checked={selectedValue === "bank1"}
-                onChange={setSelectedValue}
+                value="BCA"
+                checked={selectedBank === "BCA"}
+                onChange={() => {
+                  setSelectedBank("BCA");
+                  setValue("channel_bank", "BCA");
+                }}
                 label="BCA Virtual Account"
                 imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1199px-Bank_Central_Asia.svg.png"
               />
               <RadioBank
                 id="radio-bank-2"
                 name="topup-method"
-                value="bank2"
-                checked={selectedValue === "bank2"}
-                onChange={setSelectedValue}
+                value="BNI"
+                checked={selectedBank === "BNI"}
+                onChange={() => {
+                  setSelectedBank("BNI");
+                  setValue("channel_bank", "BNI");
+                }}
                 label="BNI Virtual Account"
                 imageUrl="https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/300px-BNI_logo.svg.png?20240305030303"
               />
               <RadioBank
                 id="radio-bank-3"
                 name="topup-method"
-                value="bank3"
-                checked={selectedValue === "bank3"}
-                onChange={setSelectedValue}
+                value="BRI"
+                checked={selectedBank === "BRI"}
+                onChange={() => {
+                  setSelectedBank("BRI");
+                  setValue("channel_bank", "BRI");
+                }}
                 label="BRI Virtual Account"
                 imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/189px-BANK_BRI_logo.svg.png?20180118061811"
               />
               <RadioBank
                 id="radio-bank-4"
                 name="topup-method"
-                value="bank4"
-                checked={selectedValue === "bank4"}
-                onChange={setSelectedValue}
+                value="CIMB"
+                checked={selectedBank === "CIMB"}
+                onChange={() => {
+                  setSelectedBank("CIMB");
+                  setValue("channel_bank", "CIMB");
+                }}
                 label="CIMB Virtual Account"
                 imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/CIMB_Niaga_logo.svg/1200px-CIMB_Niaga_logo.svg.png"
               />
@@ -73,50 +117,43 @@ const TopUp = () => {
             <div className="flex-1 container bg-white border border-gray-200 rounded-xl p-5 shadow-lg">
               <h2 className="mb-5 font-semibold">Select Nominal</h2>
               <div className="grid grid-cols-4 gap-4 mb-5">
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(30000)}
-                </button>
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(50000)}
-                </button>
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(100000)}
-                </button>
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(200000)}
-                </button>
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(300000)}
-                </button>
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(400000)}
-                </button>
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(500000)}
-                </button>
-                <button className="p-4 border border-gray-300 rounded cursor-pointer">
-                  Rp {numberWithCommas(1000000)}
-                </button>
+                {[
+                  30000, 50000, 100000, 200000, 300000, 400000, 500000, 1000000,
+                ].map((amount) => (
+                  <button
+                    key={amount}
+                    type="button"
+                    className="p-4 border border-gray-300 rounded cursor-pointer"
+                    onClick={() => setValue("amount", amount)}
+                  >
+                    Rp {numberWithCommas(amount)}
+                  </button>
+                ))}
               </div>
               <h2 className="mb-5 font-semibold">Nominal</h2>
               <div className="mb-6">
                 <input
                   type="number"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Rp."
+                  {...register("amount", { valueAsNumber: true })}
                 />
                 <p className="text-xs text-[#737373]">
                   minimal top up Rp10.000
                 </p>
+                {errors.amount && (
+                  <p className="text-red-500 text-xs">
+                    {errors.amount.message}
+                  </p>
+                )}
               </div>
-              <Link to={"/top-up-detail"}>
-                <button
-                  type="submit"
-                  className="text-white bg-[#464BD8] hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-                >
-                  Top Up
-                </button>
-              </Link>
+              <button
+                type="submit"
+                className="text-white bg-[#464BD8] hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                disabled={isSubmitting}
+              >
+                Top Up
+              </button>
             </div>
           </form>
         </div>
