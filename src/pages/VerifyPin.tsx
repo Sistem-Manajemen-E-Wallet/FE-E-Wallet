@@ -1,13 +1,25 @@
+import { toast } from "@/components/ui/use-toast";
+import { verfifyTransaction } from "@/utils/api/transaction";
+import { transactionUser } from "@/utils/api/transaction/api";
 import { atom, useAtom } from "jotai";
 import { ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const pinAtom = atom(["", "", "", "", "", ""]);
 const VerifyPin = () => {
   const [pin, setPin] = useAtom(pinAtom);
+  const location = useLocation();
+  const state = location.state;
   const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+  if (!state) {
+    return <Navigate to={"/"} replace />;
+  }
+
+  const handleChange = async (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const value = e.target.value;
     if (!/^[0-9]$/.test(value) && value !== "") return;
 
@@ -20,7 +32,31 @@ const VerifyPin = () => {
     }
 
     if (newPin.every((digit) => digit !== "")) {
-      navigate("/payment-detail", { replace: true });
+      const pins = Number(newPin.join(""));
+      const pinsString = pins.toString();
+
+      const data = {
+        pin: pinsString,
+      };
+
+      const response = await verfifyTransaction(data);
+      if (response.statusCode == 200) {
+        const dataTrx = {
+          order_id: state.dataTrx.order_id,
+          product_id: state.dataTrx.product_id,
+          quantity: state.dataTrx.quantity,
+          additional: state.dataTrx.additional,
+        };
+        const responseTrx = await transactionUser(dataTrx);
+        if (responseTrx.statusCode == 201) {
+          toast({
+            description: "Success Transaction",
+          });
+          navigate("/payment-detail", { replace: true });
+        }
+      } else {
+        alert("Incorrect PIN");
+      }
     }
   };
 

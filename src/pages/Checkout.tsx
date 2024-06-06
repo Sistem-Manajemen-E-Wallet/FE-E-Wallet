@@ -1,16 +1,38 @@
 import { userWallet } from "@/utils/api/wallet";
 import { atom, useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { LogoDelete, LogoEdit, LogoUser } from "../assets/logo";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
 const walletAtom = atom(0);
+const noteAtom = atom("");
+const numberOrder = atom(0);
+
 const Checkout = () => {
   const location = useLocation();
   const state = location.state;
-
+  const [notes, setNotes] = useAtom(noteAtom);
+  const [number, setNumber] = useAtom(numberOrder);
   const [wallets, setWallets] = useAtom(walletAtom);
+  const navigate = useNavigate();
+
+  if (!state) {
+    return <Navigate to={"/"} replace />;
+  }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const target = e.target;
+    if (target.name === "note") {
+      setNotes(target.value);
+    }
+
+    if (target.name === "numberorder") {
+      setNumber(Number(target.value));
+    }
+  };
 
   // Call API Wallet
   const getWallet = useCallback(async () => {
@@ -25,8 +47,18 @@ const Checkout = () => {
   }, [getWallet]);
 
   const handleCheckout = () => {
-    if (wallets > state.dataCheckout.price) {
-      console.log("deduct");
+    if (wallets >= state.dataCheckout.price) {
+      const dataTrx = {
+        order_id: number,
+        product_id: state.dataCheckout.product_id,
+        quantity: state.dataCheckout.qty,
+        additional: notes,
+      };
+      navigate("/verify-pin", {
+        state: {
+          dataTrx,
+        },
+      });
     } else {
       alert("Your wallet balance is insufficient, please top up");
     }
@@ -93,11 +125,29 @@ const Checkout = () => {
           </div>
         </div>
         <hr className="h-px border-t-0 bg-black mt-2" />
-        <p className="mt-5 mb-2 font-semibold">Note</p>
-        <textarea
-          className="bg-white w-1/2 mobile:w-full rounded-xl h-36 shadow-2xl shadow-gray-500 p-3"
-          placeholder="Add Pedes Level 10 ..."
-        ></textarea>
+        <div className="flex justify-between gap-10">
+          <div className="w-screen">
+            <p className="mt-5 mb-2 font-semibold">Note</p>
+            <textarea
+              name="note"
+              value={notes}
+              onChange={handleChange}
+              className="bg-white w-full mobile:w-full rounded-xl h-36 shadow-2xl shadow-gray-500 p-3"
+              placeholder="Add Pedes Level 10 ..."
+            ></textarea>
+          </div>
+          <div className="w-screen">
+            <p className="mt-5 mb-2 font-semibold">Number Order</p>
+            <input
+              type="number"
+              name="numberorder"
+              value={number}
+              onChange={handleChange}
+              className="bg-white w-full mobile:w-full rounded-xl shadow-2xl shadow-gray-500 p-3"
+              placeholder="1"
+            />
+          </div>
+        </div>
       </div>
       <div className="fixed bottom-0 w-full border-gray-200 bg-white shadow-gray-950 rounded-t-2xl">
         <div className="container">
