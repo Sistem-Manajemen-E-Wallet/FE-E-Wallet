@@ -1,17 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginType, userLogin } from "@/utils/api/auth";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../assets/logo/logo.svg";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import Cookies from "js-cookie";
+import { useToken } from "@/utils/contexts/useToken";
 
 const Login = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const { changeToken } = useToken();
 
   const form = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
@@ -28,9 +28,7 @@ const Login = () => {
         toast({
           description: `Hello, ${result.data.data.name} welcome back!`,
         });
-        const tokenBase64 = btoa(result.data.data.token);
-        Cookies.set("token", tokenBase64, { expires: 2 });
-        navigate("/", { replace: true });
+        changeToken(result.data.data.token);
       }
     } catch (error) {
       toast({
