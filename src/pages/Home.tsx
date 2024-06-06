@@ -2,7 +2,7 @@ import { userWallet } from "@/utils/api/wallet";
 import { numberWithCommas } from "@/utils/hooks/usePrice";
 import { atom, useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   Bpjs,
