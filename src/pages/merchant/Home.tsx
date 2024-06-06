@@ -25,6 +25,7 @@ const Home = () => {
   const token = Cookies.get("token");
   const [users, setUsers] = useAtom(userAtom);
 
+  //mendapatkan id user untuk totalProduct
   const getProfiles = useCallback(async () => {
     const response = await userProfile();
     if (response.statusCode == 200) {
@@ -66,7 +67,7 @@ const Home = () => {
         className="flex h-20 w-40 bg-white shadow border flex-col items-center justify-center rounded"
       >
         <div className="flex flex-row items-center justify-center">
-          <ProductIcon color="#525252" />
+          <ProductIcon color="#525252" /> 
           <span className="font-bold text-gray-600"> {totalProduct}</span>
         </div>
         <div className="mt-2 text-sm text-gray-400">Total products</div>

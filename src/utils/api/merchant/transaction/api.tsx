@@ -4,13 +4,6 @@ interface Transaction {
   TotalCost: number;
 }
 
-// interface ApiResponse {
-//   data: Transaction[];
-//   meta: {
-//     totalItems: number;
-//   };
-// }
-
 export async function getAllTransaction() {
   try {
     const ROOT_API = import.meta.env.VITE_REACT_API_URL;
