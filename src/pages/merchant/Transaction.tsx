@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { FilterIcon, SearchIcon } from "../../components/icons/Index";
+import { Daum } from "@/utils/api/merchant/transaction/types";
+import { getAllTransaction } from "@/utils/api/merchant/transaction/api";
 
 const Transaction = () => {
   const [isDropdownFilterOpen, setIsDropdownFilterOpen] = useState(false);
@@ -37,6 +39,22 @@ const Transaction = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
+
+  const [transactions, setTransactions] = useState<Daum[]>([]);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await getAllTransaction();
+        console.log(response);
+        setTransactions(response.data);
+      } catch (error) {
+        console.error("Failed to fetch transactions:", error);
+      }
+    };
+
+    fetchTransactions();
   }, []);
 
   return (
@@ -118,72 +136,27 @@ const Transaction = () => {
                 Progress
               </th>
               <th scope="col" className="px-6 py-3">
-                Status
+                Status Pembayaran
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td className="px-6 py-4">12</td>
-              <td className="px-6 py-4">Seseorang</td>
-              <td className="px-6 py-4">Pecel lele</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">Rp. 20.000</td>
-              <td className="px-6 py-4">
-                <div
-                  className="relative inline-block text-left"
-                  ref={updateStatusDropdownRef}
-                >
-                  <button
-                    id="anotherDropdownDefaultButton"
-                    data-dropdown-toggle="dropdown"
-                    className="inline-flex gap-2 items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded text-sm px-3 py-1.5"
-                    type="button"
-                    onClick={toggleAnotherDropdown}
-                  >
-                    Sedang dimasak
-                  </button>
-
-                  {isUpdateStatusDropdownOpen && (
-                    <div
-                      id="updateStatusDropdown"
-                      className="z-10 bg-white rounded-lg shadow w-44 absolute mt-2"
-                    >
-                      <ul
-                        className="text-sm text-gray-700"
-                        aria-labelledby="updateStatusDropdown"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 hover:bg-gray-100 border-b"
-                          >
-                            Sedang dimasak
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 hover:bg-gray-100 border-b"
-                          >
-                            Sedang diantar
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 hover:bg-gray-100 border-b"
-                          >
-                            Sudah diantar
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </td>
-              <td className="px-6 py-4">Success</td>
-            </tr>
+            {transactions.map((transaction, index) => (
+              <tr
+                key={index}
+                className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td className="px-6 py-4">{transaction.OrderID}</td>
+                <td className="px-6 py-4">{transaction.CustName}</td>
+                <td className="px-6 py-4">{transaction.ProductName}</td>
+                <td className="px-6 py-4">{transaction.Quantity}</td>
+                <td className="px-6 py-4">Rp. {transaction.TotalCost}</td>
+                <td className="px-6 py-4">{transaction.StatusProgress}</td>
+                <td className="px-6 py-4 text-green-500">
+                  {transaction.StatusPayment}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
