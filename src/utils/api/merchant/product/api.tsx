@@ -10,12 +10,33 @@ export async function getAllProduct(userId: number) {
   });
 }
 
+export async function getProductById(id: string) {
+  const ROOT_API = import.meta.env.VITE_REACT_API_URL;
+  const url = `${ROOT_API}/products/${id}`;
+  return callAPI({
+    url,
+    method: "GET",
+    token: true,
+  });
+}
+
 export async function createProduct(data: any) {
   const ROOT_API = import.meta.env.VITE_REACT_API_URL;
   const url = `${ROOT_API}/products`;
   return callAPI({
     url,
     method: "POST",
+    data,
+    token: true,
+  });
+}
+
+export async function updateProduct(productId: string, data: any) {
+  const ROOT_API = import.meta.env.VITE_REACT_API_URL;
+  const url = `${ROOT_API}/products/${productId}`;
+  return callAPI({
+    url,
+    method: "PUT",
     data,
     token: true,
   });
