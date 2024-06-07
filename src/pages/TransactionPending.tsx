@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { topUpPending } from "@/utils/api/topUp/api";
-import { ItopUpPending } from "@/utils/api/topUp/types";
+import { ItopUp } from "@/utils/api/topUp/types";
 import { numberWithCommas } from "@/utils/hooks/usePrice";
 import useQuery from "@/utils/hooks/useQuery";
 import { Copy } from "lucide-react";
@@ -22,7 +22,7 @@ const iconBank = [
 const TransactionPending = () => {
   const query = useQuery();
   const id = query.get("id") ?? "";
-  const [topUpDetail, setTopUpDetail] = useState<ItopUpPending>();
+  const [topUpDetail, setTopUpDetail] = useState<ItopUp>();
 
   const getTopUpDetail = useCallback(async () => {
     const response = await topUpPending(id);
@@ -45,8 +45,8 @@ const TransactionPending = () => {
     } else {
       return iconBank[3];
     }
-    return "";
   };
+  
   return (
     <section className="relative overflow-auto h-screen pt-32">
       <div className="py-6 pb-28 bg-slate-100">

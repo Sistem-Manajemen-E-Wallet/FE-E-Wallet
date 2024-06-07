@@ -64,6 +64,7 @@ const ProtectedRoute = () => {
   }
 
   if (isProtectedByToken) {
+
     if (!token) return <Navigate to="/login" />;
 
     if (
