@@ -7,16 +7,13 @@ const HistoryComp = (props: {
   type: string;
   price: number;
 }) => {
-
   return (
-    <div
-      className="bg-white mb-5 hover:bg-slate-400 py-2 px-2"
-    >
+    <div className="bg-white mb-5 hover:bg-slate-400 py-2 px-2">
       <div className="flex justify-between">
         <p className="font-light">{props.date}</p>
         <div
           className={`${
-            props.status == "Success" ? `bg-green-600` : `bg-yellow-500`
+            props.status ==  "paid" ? `bg-green-600` : props.status ==  "success" ? `bg-blue-600` : props.status == "pending" ? `bg-yellow-500` : `bg-red-600`
           } rounded-full`}
         >
           <p className="px-3 py-3 text-white">{props.status}</p>
@@ -29,9 +26,9 @@ const HistoryComp = (props: {
         </div>
         <div className="flex items-end">
           <p
-            className={`${props.price < 0 ? `text-red-600` : `text-green-600`}`}
+            className={`${props.type === "payment" ? `text-red-600` : `text-green-600`}`}
           >
-            Rp <span>{numberWithCommas(props.price)}</span>
+            {props.type === "payment" ? <span>-</span> : null}Rp <span>{numberWithCommas(props.price)}</span>
           </p>
         </div>
       </div>

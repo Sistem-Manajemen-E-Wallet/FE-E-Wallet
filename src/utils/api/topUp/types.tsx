@@ -5,7 +5,7 @@ export const topUpSchema = z.object({
     channel_bank: z.string().nonempty({ message: "Please select a bank" }),
   });
 
-export interface ItopUpPending {
+export interface ItopUp {
   message: string,
   data: {
     id: number,
