@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { useToken } from "../contexts/useToken";
 
 interface CallAPIProps extends AxiosRequestConfig {
   token?: boolean;
@@ -44,8 +43,9 @@ export default async function callAPI({
           Authorization: `Bearer ${jwtToken}`,
         };
       } else {
-        const { changeToken } = useToken();
-        changeToken("");
+        Cookies.remove("token");
+        console.log("dddd");
+        window.location.reload();
       }
     }
   }
