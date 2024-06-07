@@ -1,53 +1,24 @@
-import { useRef, useState, useEffect } from "react";
 import { FilterIcon, SearchIcon } from "../../components/icons/Index";
 import { Daum } from "@/utils/api/merchant/transaction/types";
-import { getAllTransaction } from "@/utils/api/merchant/transaction/api";
+import {
+  getAllTransaction,
+  updateStatusProgress,
+} from "@/utils/api/merchant/transaction/api"; // Pastikan import benar
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/Dropdown";
+import { useEffect, useState } from "react";
 
 const Transaction = () => {
-  const [isDropdownFilterOpen, setIsDropdownFilterOpen] = useState(false);
-  const [isUpdateStatusDropdownOpen, setIsUpdateStatusDropdownOpen] =
-    useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const updateStatusDropdownRef = useRef<HTMLDivElement>(null);
-
-  const toggleDropdown = () => {
-    setIsDropdownFilterOpen(!isDropdownFilterOpen);
-  };
-
-  const toggleAnotherDropdown = () => {
-    setIsUpdateStatusDropdownOpen(!isUpdateStatusDropdownOpen);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsDropdownFilterOpen(false);
-    }
-    if (
-      updateStatusDropdownRef.current &&
-      !updateStatusDropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsUpdateStatusDropdownOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   const [transactions, setTransactions] = useState<Daum[]>([]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const response = await getAllTransaction();
-        console.log(response);
         setTransactions(response.data);
       } catch (error) {
         console.error("Failed to fetch transactions:", error);
@@ -57,45 +28,47 @@ const Transaction = () => {
     fetchTransactions();
   }, []);
 
+  const handleStatusUpdate = async (
+    transactionId: number,
+    newStatus: string
+  ) => {
+    try {
+      const response = await updateStatusProgress(transactionId, {
+        status_progress: newStatus,
+      });
+
+      console.log("Status updated successfully:", response);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  console.log(transactions);
+
   return (
     <div>
       <div className="relative mobile:rounded-xl my-6">
         <div className="flex flex-column mobile:flex-row flex-wrap space-y-4 mobile:space-y-0 items-center justify-between pb-4">
           <div>
-            <div className="relative inline-block text-left" ref={dropdownRef}>
-              <button
-                id="dropdownDefaultButton"
-                data-dropdown-toggle="dropdown"
-                className="inline-flex gap-2 items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded text-sm px-3 py-1.5"
-                type="button"
-                onClick={toggleDropdown}
-              >
-                <FilterIcon />
-                Filter
-              </button>
-
-              {isDropdownFilterOpen && (
-                <div
-                  id="dropdown"
-                  className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute mt-2"
-                >
-                  <ul
-                    className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="dropdownDefaultButton"
+            <div className="relative inline-block text-left">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <button
+                    id="dropdownDefaultButton"
+                    data-dropdown-toggle="dropdown"
+                    className="inline-flex gap-2 items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded text-sm px-3 py-1.5"
+                    type="button"
                   >
-                    <li>
-                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                        Progress
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                        Created at
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              )}
+                    <FilterIcon />
+                    Filter
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Progress</DropdownMenuItem>
+                  <DropdownMenuItem>Name</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           <label htmlFor="transaction-search" className="sr-only">
@@ -151,7 +124,41 @@ const Transaction = () => {
                 <td className="px-6 py-4">{transaction.ProductName}</td>
                 <td className="px-6 py-4">{transaction.Quantity}</td>
                 <td className="px-6 py-4">Rp. {transaction.TotalCost}</td>
-                <td className="px-6 py-4">{transaction.StatusProgress}</td>
+                <td className="px-6 py-4">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <span className="p-2 bg-white border rounded">
+                        {transaction.StatusProgress}
+                      </span>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          transaction.ID !== undefined &&
+                          handleStatusUpdate(transaction.ID, "Sedang Dimasak")
+                        }
+                      >
+                        Sedang Dimasak
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          transaction.ID !== undefined &&
+                          handleStatusUpdate(transaction.ID, "Sedang Diantar")
+                        }
+                      >
+                        Sedang Diantar
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          transaction.ID !== undefined &&
+                          handleStatusUpdate(transaction.ID, "Sudah Diantar")
+                        }
+                      >
+                        Sudah Diantar
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </td>
                 <td className="px-6 py-4 text-green-500">
                   {transaction.StatusPayment}
                 </td>

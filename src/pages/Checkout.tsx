@@ -1,20 +1,24 @@
+import { useToast } from "@/components/ui/use-toast";
 import { userWallet } from "@/utils/api/wallet";
 import { atom, useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { LogoDelete, LogoEdit, LogoUser } from "../assets/logo";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
 const walletAtom = atom(0);
 const noteAtom = atom("");
-const numberOrder = atom(0);
+const numberOrder = atom("");
+const errorAtom = atom("");
 
 const Checkout = () => {
+  const { toast } = useToast();
   const location = useLocation();
   const state = location.state;
   const [notes, setNotes] = useAtom(noteAtom);
   const [number, setNumber] = useAtom(numberOrder);
   const [wallets, setWallets] = useAtom(walletAtom);
+  const [errorMessage, setErrorMessage] = useAtom(errorAtom);
   const navigate = useNavigate();
 
   if (!state) {
@@ -29,8 +33,15 @@ const Checkout = () => {
       setNotes(target.value);
     }
 
-    if (target.name === "numberorder") {
-      setNumber(Number(target.value));
+    if (
+      target.name === "numberorder" &&
+      /^[0-9]*$/.test(target.value) &&
+      target.value !== ""
+    ) {
+      setErrorMessage("");
+      setNumber(target.value);
+    } else {
+      setErrorMessage("Number Order is Required");
     }
   };
 
@@ -47,20 +58,31 @@ const Checkout = () => {
   }, [getWallet]);
 
   const handleCheckout = () => {
+    if (number === "") {
+      setErrorMessage("Number Order is Required");
+      return;
+    }
+
     if (wallets >= state.dataCheckout.price) {
       const dataTrx = {
-        order_id: number,
+        order_id: Number(number),
         product_id: state.dataCheckout.product_id,
         quantity: state.dataCheckout.qty,
         additional: notes,
+        price: state.dataCheckout.price * state.dataCheckout.qty,
       };
+
       navigate("/verify-pin", {
         state: {
           dataTrx,
         },
       });
     } else {
-      alert("Your wallet balance is insufficient, please top up");
+      toast({
+        title: "Wallet not enough",
+        description: "Your wallet balance is insufficient, please top up",
+      });
+      navigate("/top-up", { replace: true });
     }
   };
   return (
@@ -92,12 +114,15 @@ const Checkout = () => {
               </span>
             </p>
             <div className="flex gap-3 mobile:mb-3">
-              <div className="bg-white rounded-full p-1">
+              <Link
+                to={`/product-detail/${state.dataCheckout.product_id}`}
+                className="bg-white rounded-full p-1"
+              >
                 <img src={LogoEdit} alt="edit" width={30} height={30} />
-              </div>
-              <div className="bg-white rounded-full p-1">
+              </Link>
+              <Link to={"/product-list"} className="bg-white rounded-full p-1">
                 <img src={LogoDelete} alt="delete" width={30} height={30} />
-              </div>
+              </Link>
             </div>
           </div>
           <div className="bg-white rounded-xl shadow-2xl shadow-gray-500 w-auto h-auto py-5 px-5">
@@ -137,12 +162,20 @@ const Checkout = () => {
             ></textarea>
           </div>
           <div className="w-screen">
-            <p className="mt-5 mb-2 font-semibold">Number Order</p>
+            <p className="mt-5 mb-2 font-semibold">
+              <span className="text-red-600">* </span> Number Order
+            </p>
+            {errorMessage && (
+              <p className="text-red-500 mb-2 text-sm font-bold">
+                {errorMessage}
+              </p>
+            )}
             <input
-              type="number"
+              type="text"
+              id="numbers"
               name="numberorder"
               value={number}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               className="bg-white w-full mobile:w-full rounded-xl shadow-2xl shadow-gray-500 p-3"
               placeholder="1"
             />

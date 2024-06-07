@@ -1,4 +1,4 @@
-export interface ProductResponse {
+export interface TransactionResponse {
     message: string;
     meta: Meta;
     data: Daum[];
@@ -12,7 +12,7 @@ export interface ProductResponse {
   }
   
   export interface Daum {
-    id?: number;
+    ID?: number;
     UserID?: number;
     ProductID?: number;
     OrderID?: number;
