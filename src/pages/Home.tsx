@@ -86,18 +86,85 @@ const Home = () => {
             name="Food Court"
             source={FoodCourt}
             navigate="/product-list"
+            isMaintenance={false}
           />
-          <Menu key={2} name="Pay" source={Pay} navigate="/" />
-          <Menu key={3} name="Credit & Data" source={PulseData} navigate="/" />
-          <Menu key={4} name="BPJS Kesehatan" source={Bpjs} navigate="/" />
-          <Menu key={5} name="PDAM" source={Pdam} navigate="/" />
-          <Menu key={6} name="Internet" source={Internet} navigate="/" />
-          <Menu key={7} name="PLN" source={Pln} navigate="/" />
-          <Menu key={8} name="Voucher Game" source={Game} navigate="/" />
-          <Menu key={9} name="Cicilan" source={Cicilan} navigate="/" />
-          <Menu key={10} name="Pay Insurance" source={Insurance} navigate="/" />
-          <Menu key={11} name="TIX ID" source={TixId} navigate="/" />
-          <Menu key={12} name="Netflix" source={Netflix} navigate="/" />
+          <Menu
+            key={2}
+            name="Pay"
+            source={Pay}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={3}
+            name="Credit & Data"
+            source={PulseData}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={4}
+            name="BPJS Kesehatan"
+            source={Bpjs}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={5}
+            name="PDAM"
+            source={Pdam}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={6}
+            name="Internet"
+            source={Internet}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={7}
+            name="PLN"
+            source={Pln}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={8}
+            name="Voucher Game"
+            source={Game}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={9}
+            name="Cicilan"
+            source={Cicilan}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={10}
+            name="Pay Insurance"
+            source={Insurance}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={11}
+            name="TIX ID"
+            source={TixId}
+            navigate="/"
+            isMaintenance={true}
+          />
+          <Menu
+            key={12}
+            name="Netflix"
+            source={Netflix}
+            navigate="/"
+            isMaintenance={true}
+          />
         </div>
       </div>
     </section>

@@ -106,17 +106,15 @@ const Login = () => {
                   "Sign In"
                 )}
               </Button>
-              {/* <button
-                type="submit"
-                className="text-white bg-[#464BD8] hover:bg-[#464BD8]/80 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-              >
-                Sign In
-              </button> */}
             </form>
           </Form>
-          <p className="text-end">
-            <Link to={""} className="text-sm text-[#737373] hover:text-black">
-              Forgot Password?
+          <p className="text-end mt-2">
+            Baru di AltaPay?{" "}
+            <Link
+              to={"/register"}
+              className="text-lg font-semibold text-[#737373] hover:text-black"
+            >
+              Register
             </Link>
           </p>
         </div>
