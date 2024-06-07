@@ -2,6 +2,7 @@ import callAPI from "../../axiosWithConfig";
 
 interface Transaction {
   TotalCost: number;
+  id: number;
 }
 
 export async function getAllTransaction() {
@@ -18,6 +19,18 @@ export async function getAllTransaction() {
     console.error("Failed to fetch transactions", error);
     throw error;
   }
+}
+
+export async function updateStatusProgress(id: number, data: any) {
+  const ROOT_API = import.meta.env.VITE_REACT_API_URL;
+  const url = `${ROOT_API}/transactions/${id}`;
+
+  return callAPI({
+    url,
+    method: "PUT",
+    data,
+    token: true,
+  });
 }
 
 export async function getTotalTrasnaction() {
