@@ -1,10 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
-import { Navigate } from "react-router-dom";
+import { useToken } from "../contexts/useToken";
 
 interface CallAPIProps extends AxiosRequestConfig {
   token?: boolean;
-  serverToken?: string;
 }
 
 export default async function callAPI({
@@ -12,15 +11,10 @@ export default async function callAPI({
   method,
   data,
   token,
-  serverToken,
 }: CallAPIProps) {
   let headers = {};
 
-  if (serverToken) {
-    headers = {
-      Authorization: `Bearer ${serverToken}`,
-    };
-  } else if (token) {
+  if (token) {
     const tokenCookies = Cookies.get("token");
     if (tokenCookies) {
       const jwtToken = atob(tokenCookies);
@@ -37,7 +31,8 @@ export default async function callAPI({
   }).catch((err) => err.response);
 
   if (respon.status == 401) {
-    <Navigate to={"/login"} replace />;
+    const { changeToken } = useToken();
+    changeToken("");
   }
 
   if (

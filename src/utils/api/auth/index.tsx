@@ -1,5 +1,18 @@
-import { userLogin } from "./api";
-import { loginSchema, LoginTypes, LoginType } from "./types";
+import { userLogin, userRegister, merchantRegister } from "./api";
+import {
+  loginSchema,
+  LoginTypes,
+  LoginType,
+  registerSchema,
+  RegisterType,
+  ModelLogoutProps,
+} from "./types";
 
-export { userLogin, loginSchema };
-export type { LoginTypes, LoginType };
+export {
+  userLogin,
+  loginSchema,
+  userRegister,
+  merchantRegister,
+  registerSchema,
+};
+export type { LoginTypes, LoginType, RegisterType, ModelLogoutProps };
