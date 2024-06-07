@@ -12,6 +12,7 @@ import {
   getTotalIncome,
   getTotalTrasnaction,
 } from "@/utils/api/merchant/transaction/api";
+import { numberWithCommas } from "@/utils/hooks/usePrice";
 
 const userAtom = atom({
   id: "",
@@ -67,7 +68,7 @@ const Home = () => {
         className="flex h-20 w-40 bg-white shadow border flex-col items-center justify-center rounded"
       >
         <div className="flex flex-row items-center justify-center">
-          <ProductIcon color="#525252" /> 
+          <ProductIcon color="#525252" />
           <span className="font-bold text-gray-600"> {totalProduct}</span>
         </div>
         <div className="mt-2 text-sm text-gray-400">Total products</div>
@@ -89,9 +90,12 @@ const Home = () => {
         <div className="flex flex-row items-center justify-center">
           <IncomeIcon />
 
-          <span className="font-bold text-gray-600"> Rp. {totalIncome} </span>
+          <span className="font-bold text-gray-600">
+            {" "}
+            Rp. {numberWithCommas(totalIncome)}{" "}
+          </span>
         </div>
-        <div className="mt-2 text-sm text-gray-400">Total income</div>
+        <div className="mt-2 text-sm text-gray-400">Total incomes</div>
       </a>
     </div>
   );

@@ -1,6 +1,8 @@
 import { ImageStandPecel } from "@/assets/image";
+import { useToken } from "@/utils/contexts/useToken";
 
 const Profile = () => {
+  const { user } = useToken();
   return (
     <div className="my-6">
       <div className="flex gap-3 bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start">
@@ -12,7 +14,7 @@ const Profile = () => {
           />
         </div>
         <div className="flex flex-col gap-2 py-2">
-          <p className="text-xl font-bold">Pecel lele berkah</p>
+          <p className="text-xl font-bold">{user.name}</p>
           <p className="text-neutral-400">bergabung pada: 03-juni-2024</p>
           <span className="flex items-center justify-start gap-2">
             <button className="py-0.5 px-2 rounded-[10px] bg-rose-400 hover:bg-rose-600 text-white">

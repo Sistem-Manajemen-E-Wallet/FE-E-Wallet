@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/Dropdown";
 import { useEffect, useState } from "react";
+import { numberWithCommas } from "@/utils/hooks/usePrice";
 
 const Transaction = () => {
   const [transactions, setTransactions] = useState<Daum[]>([]);
@@ -123,7 +124,9 @@ const Transaction = () => {
                 <td className="px-6 py-4">{transaction.CustName}</td>
                 <td className="px-6 py-4">{transaction.ProductName}</td>
                 <td className="px-6 py-4">{transaction.Quantity}</td>
-                <td className="px-6 py-4">Rp. {transaction.TotalCost}</td>
+                <td className="px-6 py-4">
+                  Rp. {numberWithCommas(transaction.TotalCost)}
+                </td>
                 <td className="px-6 py-4">
                   <DropdownMenu>
                     <DropdownMenuTrigger>
