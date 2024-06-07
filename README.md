@@ -37,19 +37,19 @@ Selamat datang di projek kami, projek ini bertujuan untuk mereplikasi beberapa f
 
 - Berikut beberapa fitur dari AltaPay:
 
-   - Pendaftaran dan Autentikasi 
-      - Registrasi pengguna: Formulir pendaftaran dengan memasukkan nomor telepon, email, alamat, pin, pin konfirmasi. 
-      - Login: Sistem login menggunakan nomor telepon dan pin
-   - Pengelolaan Akun 
-      - Profil pengguna: Halaman profil untuk melihat dan mengedit informasi pribadi. 
-      - Saldo dompet: Tampilan saldo saat ini.
-   - TopUp Dana 
-      - Melakukan pengisian dana: Integrasi dengan metode pembayaran seperti Virtual Account, Kartu Kredit/Debit, dan Transfer Bank
-   - Transaksi 
-      - Pembayaran: Melakukan pengirim uang ke merchant. 
-      - Riwayat transaksi: Daftar semua transaksi yang pernah dilakukan berdasarkan tanggal melakukan transaksi dengan merchant maupun topup dana.
-   - Keamanan 
-      - Keamanan transaksi: Enkripsi data.
+  - Pendaftaran dan Autentikasi
+    - Registrasi pengguna: Formulir pendaftaran dengan memasukkan nomor telepon, email, alamat, pin, pin konfirmasi.
+    - Login: Sistem login menggunakan nomor telepon dan pin
+  - Pengelolaan Akun
+    - Profil pengguna: Halaman profil untuk melihat dan mengedit informasi pribadi.
+    - Saldo dompet: Tampilan saldo saat ini.
+  - TopUp Dana
+    - Melakukan pengisian dana: Integrasi dengan metode pembayaran seperti Virtual Account, Kartu Kredit/Debit, dan Transfer Bank
+  - Transaksi
+    - Pembayaran: Melakukan pengirim uang ke merchant.
+    - Riwayat transaksi: Daftar semua transaksi yang pernah dilakukan berdasarkan tanggal melakukan transaksi dengan merchant maupun topup dana.
+  - Keamanan
+    - Keamanan transaksi: Enkripsi data.
 
 ## 🧰 Installation
 
