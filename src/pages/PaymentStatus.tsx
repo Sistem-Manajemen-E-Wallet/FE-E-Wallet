@@ -1,7 +1,31 @@
+import { userWallet } from "@/utils/api/wallet";
+import { atom, useAtom } from "jotai";
+import { useCallback, useEffect } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { LogoSuccess } from "../assets/logo";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
+const walletAtom = atom(0);
 const PaymentStatus = () => {
+  const location = useLocation();
+  const [wallets, setWallets] = useAtom(walletAtom);
+  const state = location.state;
+  if (!state) {
+    return <Navigate to={"/"} replace />;
+  }
+
+  // Call API Wallet
+  const getWallet = useCallback(async () => {
+    const response = await userWallet();
+    if (response.statusCode == 200) {
+      setWallets(response.data.data.Balance);
+    }
+  }, []);
+
+  useEffect(() => {
+    getWallet();
+  }, [getWallet]);
+
   return (
     <section className="relative p-0 h-screen py-40 bg-green-500">
       <div className="container text-center">
@@ -13,10 +37,10 @@ const PaymentStatus = () => {
         </p>
         <p className="mb-5 text-xl font-medium text-white">Total Cost</p>
         <p className="mb-16 text-lg font-bold text-white">
-          Rp. {numberWithCommas(40000)}
+          Rp. {numberWithCommas(state.dataSuccess.price)}
         </p>
         <p className="font-light text-sm text-white">
-          Your current balance is Rp. {numberWithCommas(19060000)}
+          Your current balance is Rp. {numberWithCommas(wallets)}
         </p>
       </div>
     </section>

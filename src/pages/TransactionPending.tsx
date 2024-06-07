@@ -21,7 +21,7 @@ const iconBank = [
 
 const TransactionPending = () => {
   const query = useQuery();
-  const id = query.get("id");
+  const id = query.get("id") ?? "";
   const [topUpDetail, setTopUpDetail] = useState<ItopUpPending>();
 
   const getTopUpDetail = useCallback(async () => {
@@ -116,7 +116,11 @@ const TransactionPending = () => {
                   <input
                     disabled
                     className="w-full bg-[#F4F7FE] rounded-md py-1 px-3 font-bold border-2"
-                    value={topUpDetail?.data.amount ? `Rp ${numberWithCommas(topUpDetail.data.amount)}` : ''}
+                    value={
+                      topUpDetail?.data.amount
+                        ? `Rp ${numberWithCommas(topUpDetail.data.amount)}`
+                        : ""
+                    }
                   />
                 </div>
                 <div className="flex flex-col space-y-4">

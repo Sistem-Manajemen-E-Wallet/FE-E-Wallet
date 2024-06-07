@@ -56,9 +56,9 @@ export function TokenProvider({ children }: Readonly<Props>) {
 
   const changeToken = useCallback((token?: string) => {
     const newToken = token ?? "";
-    setToken(newToken);
-    if (newToken) {
-      const tokenBase64 = btoa(newToken);
+    const tokenBase64 = btoa(newToken);
+    setToken(tokenBase64);
+    if (tokenBase64) {
       Cookies.set("token", tokenBase64, { expires: 2 });
     } else {
       Cookies.remove("token");

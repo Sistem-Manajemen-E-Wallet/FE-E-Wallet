@@ -6,10 +6,13 @@ import { ChangeEvent } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const pinAtom = atom(["", "", "", "", "", ""]);
+const loadingAtom = atom(false);
+
 const VerifyPin = () => {
   const [pin, setPin] = useAtom(pinAtom);
   const location = useLocation();
   const state = location.state;
+  const [loading, isLoading] = useAtom(loadingAtom);
   const navigate = useNavigate();
 
   if (!state) {
@@ -38,7 +41,7 @@ const VerifyPin = () => {
       const data = {
         pin: pinsString,
       };
-
+      isLoading(true);
       const response = await verfifyTransaction(data);
       if (response.statusCode == 200) {
         const dataTrx = {
@@ -49,13 +52,27 @@ const VerifyPin = () => {
         };
         const responseTrx = await transactionUser(dataTrx);
         if (responseTrx.statusCode == 201) {
+          const dataSuccess = {
+            price: state.dataTrx.price,
+          };
+          isLoading(false);
           toast({
-            description: "Success Transaction",
+            title: "Success transaction",
+            description: `${responseTrx.message}`,
           });
-          navigate("/payment-detail", { replace: true });
+          navigate("/payment-detail", {
+            replace: true,
+            state: {
+              dataSuccess,
+            },
+          });
         }
       } else {
-        alert("Incorrect PIN");
+        isLoading(false);
+        toast({
+          title: "Failed Pin",
+          description: `${response.message}`,
+        });
       }
     }
   };
@@ -69,20 +86,31 @@ const VerifyPin = () => {
   return (
     <section className="mt-80">
       <div className="container">
-        <div className="flex justify-center items-center gap-5">
-          {pin.map((digit, index) => (
-            <input
-              key={index}
-              id={`pin-${index}`}
-              type="password"
-              value={digit}
-              onChange={(e) => handleChange(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              maxLength={1}
-              className="border border-black rounded-xl w-24 h-24 text-center font-extrabold text-2xl shadow-sm shadow-black mobile:w-10 mobile:h-10"
-            />
-          ))}
-        </div>
+        {loading ? (
+          <>
+            <div className="flex justify-center items-center">
+              <div
+                className=" mr-2 h-28 w-28 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] text-black"
+                role="status"
+              ></div>
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-center items-center gap-5">
+            {pin.map((digit, index) => (
+              <input
+                key={index}
+                id={`pin-${index}`}
+                type="password"
+                value={digit}
+                onChange={(e) => handleChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                maxLength={1}
+                className="border border-black rounded-xl w-24 h-24 text-center font-extrabold text-2xl shadow-sm shadow-black mobile:w-10 mobile:h-10"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

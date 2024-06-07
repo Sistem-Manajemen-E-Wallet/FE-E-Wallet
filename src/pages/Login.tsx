@@ -2,8 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginType, userLogin } from "@/utils/api/auth";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { ChangeEvent } from "react";
 import Logo from "../assets/logo/logo.svg";
-import { Form, FormField } from "@/components/ui/form";
+import { Form, FormField, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -26,9 +27,15 @@ const Login = () => {
       const result = await userLogin(data);
       if (result.statusCode == 200) {
         toast({
+          title: "Success Login",
           description: `Hello, ${result.data.data.name} welcome back!`,
         });
         changeToken(result.data.data.token);
+      } else {
+        toast({
+          title: "Failed Login",
+          description: `${result.message}`,
+        });
       }
     } catch (error) {
       toast({
@@ -57,15 +64,18 @@ const Login = () => {
                   control={form.control}
                   name="phone_number"
                   render={({ field }) => (
-                    <Input
-                      data-testid="input-phone"
-                      placeholder="08xxxxxxxx"
-                      type="text"
-                      disabled={form.formState.isSubmitting}
-                      aria-disabled={form.formState.isSubmitting}
-                      {...field}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    />
+                    <>
+                      <Input
+                        data-testid="input-phone"
+                        placeholder="08xxxxxxxx"
+                        type="text"
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        {...field}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+                      <FormMessage className="mt-2" />
+                    </>
                   )}
                 />
               </div>
@@ -74,16 +84,26 @@ const Login = () => {
                   control={form.control}
                   name="pin"
                   render={({ field }) => (
-                    <Input
-                      data-testid="input-pin"
-                      placeholder="******"
-                      min={6}
-                      type="password"
-                      disabled={form.formState.isSubmitting}
-                      aria-disabled={form.formState.isSubmitting}
-                      {...field}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    />
+                    <>
+                      <Input
+                        data-testid="input-pin"
+                        placeholder="******"
+                        maxLength={6}
+                        type="password"
+                        onInput={(e: ChangeEvent<HTMLInputElement>) => {
+                          e.target.value = e.target.value.replace(
+                            /[^0-9]/g,
+                            ""
+                          );
+                          field.onChange(e);
+                        }}
+                        disabled={form.formState.isSubmitting}
+                        aria-disabled={form.formState.isSubmitting}
+                        {...field}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+                      <FormMessage className="mt-2" />
+                    </>
                   )}
                 />
               </div>

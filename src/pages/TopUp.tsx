@@ -6,9 +6,11 @@ import RadioBank from "../components/Radio";
 import { numberWithCommas } from "@/utils/hooks/usePrice";
 import { TopUpFormType, topUpSchema } from "@/utils/api/topUp/types";
 import { topUp } from "@/utils/api/topUp/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const TopUp = () => {
   const [selectedBank, setSelectedBank] = useState<string>("");
+  const { toast } = useToast();
 
   const {
     register,
@@ -27,14 +29,14 @@ const TopUp = () => {
 
   const handleTopUp = async (data: TopUpFormType) => {
     try {
-      console.log("Top up data", data);
-
       const result = await topUp(data);
 
-      console.log("Top-up successful", result.data.data);
       navigate(`/top-up-detail?id=${result.data.data.id}`);
     } catch (error) {
-      alert("Top-up failed: " + error.message);
+      toast({
+        title: "Topup Failed",
+        description: (error as Error).message,
+      });
     }
   };
 
