@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { HistoryComp } from "../components";
 import { getHistory } from "@/utils/api/history/api";
 import { atom, useAtom } from "jotai";
