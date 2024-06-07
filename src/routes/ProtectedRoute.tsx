@@ -22,6 +22,8 @@ const ProtectedRoute = () => {
     "/merchant/product/create",
     "/merchant/product/edit",
     "/merchant/transactions",
+    "/merchant/profile",
+    /^\/merchant\/product\/edit\/\d+$/,
   ];
 
   const userProtected = [
@@ -43,6 +45,8 @@ const ProtectedRoute = () => {
     "/merchant/product/create",
     "/merchant/product/edit",
     "/merchant/transactions",
+    "/merchant/profile",
+    /^\/merchant\/product\/edit\/\d+$/,
   ];
 
   const isRouteProtected = (routes: any[], pathname: string) => {
@@ -64,7 +68,6 @@ const ProtectedRoute = () => {
   }
 
   if (isProtectedByToken) {
-
     if (!token) return <Navigate to="/login" />;
 
     if (

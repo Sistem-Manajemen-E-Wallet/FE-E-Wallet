@@ -1,9 +1,30 @@
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 import { useToken } from "../contexts/useToken";
 
 interface CallAPIProps extends AxiosRequestConfig {
   token?: boolean;
+}
+
+function isTokenExpired(token: string) {
+  if (!token) {
+    return true;
+  }
+
+  try {
+    const decodedToken = jwtDecode(token);
+    if (!decodedToken.exp) {
+      console.error("Token does not have an exp field");
+      return true;
+    }
+
+    const currentTime = Date.now() / 1000; // Waktu saat ini dalam detik
+    return decodedToken.exp < currentTime;
+  } catch (e) {
+    console.error("Token decoding error:", e);
+    return true;
+  }
 }
 
 export default async function callAPI({
@@ -18,9 +39,14 @@ export default async function callAPI({
     const tokenCookies = Cookies.get("token");
     if (tokenCookies) {
       const jwtToken = atob(tokenCookies);
-      headers = {
-        Authorization: `Bearer ${jwtToken}`,
-      };
+      if (!isTokenExpired(jwtToken)) {
+        headers = {
+          Authorization: `Bearer ${jwtToken}`,
+        };
+      } else {
+        const { changeToken } = useToken();
+        changeToken("");
+      }
     }
   }
   const respon = await axios({
@@ -30,13 +56,9 @@ export default async function callAPI({
     headers,
   }).catch((err) => err.response);
 
-  if (respon.status == 401) {
-    const { changeToken } = useToken();
-    changeToken("");
-  }
-
   if (
     respon.status == 400 ||
+    respon.status == 401 ||
     respon.status == 403 ||
     respon.status == 404 ||
     respon.status == 500
