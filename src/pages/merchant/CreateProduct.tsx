@@ -1,10 +1,13 @@
 import { createProduct } from "@/utils/api/merchant/product/api";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateProduct = () => {
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -20,6 +23,8 @@ const CreateProduct = () => {
       setProductName("");
       setDescription("");
       setPrice("");
+
+      navigate("/merchant/products");
     } catch (error) {
       console.error("Error creating product:", error);
     }
