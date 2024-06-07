@@ -37,9 +37,15 @@ export default async function callAPI({
   }).catch((err) => err.response);
 
   if (respon.status == 401) {
-    return <Navigate to={"/login"} replace />;
+    <Navigate to={"/login"} replace />;
   }
-  if (respon.status > 300) {
+
+  if (
+    respon.status == 400 ||
+    respon.status == 403 ||
+    respon.status == 404 ||
+    respon.status == 500
+  ) {
     const res = {
       error: true,
       statusCode: respon.status,
@@ -48,6 +54,7 @@ export default async function callAPI({
     };
     return res;
   }
+
   const length = Object.keys(respon.data).length;
 
   const res = {

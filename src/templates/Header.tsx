@@ -1,38 +1,17 @@
-import { userProfile } from "@/utils/api/users";
+import { useToken } from "@/utils/contexts/useToken";
 import { atom, useAtom } from "jotai";
-import Cookies from "js-cookie";
-import { useCallback, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { LogoHistory, LogoHome, LogoLogout } from "../assets/logo";
 import Logo from "../assets/logo/logo.svg";
 
 const isOpenAtom = atom(false);
-const userAtom = atom({
-  name: "",
-  email: "",
-  role: "",
-  profile_picture: "",
-});
 
 const Header = () => {
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
-  const token = Cookies.get("token");
-  const [users, setUsers] = useAtom(userAtom);
-
-  const getProfiles = useCallback(async () => {
-    const response = await userProfile();
-    if (response.statusCode == 200) {
-      setUsers(response.data.data);
-    } else {
-      Cookies.remove("token");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (token) {
-      getProfiles();
-    }
-  }, []);
+  const { user } = useToken();
+  const location = useLocation();
+  const { pathname } = location;
+  const splitLocation = pathname.split("/");
 
   return (
     <header className="fixed top-0 z-10 border-gray-600 bg-white w-screen rounded-br-3xl rounded-bl-3xl shadow-lg shadow-gray-500">
@@ -45,7 +24,7 @@ const Header = () => {
             className="text-xl mr-5 select-none"
             onClick={() => setIsOpen(!isOpen)}
           >
-            Hi, <span className="font-bold">{users.name}</span>
+            Hi, <span className="font-bold">{user.name}</span>
             {isOpen && (
               <div
                 className={`z-10 absolute mt-1 ${
@@ -55,27 +34,57 @@ const Header = () => {
                 <ul className="">
                   <NavLink
                     to={"/"}
-                    className="flex px-4 py-2 hover:bg-gray-100"
+                    className={`${
+                      splitLocation[1] === ""
+                        ? `text-primary-first`
+                        : "text-black"
+                    } flex px-4 py-2 hover:bg-gray-100`}
                   >
-                    <div className="w-8 h-8 bg-secondary-first flex justify-center items-center rounded-full mr-2">
+                    <div
+                      className={`${
+                        splitLocation[1] === ""
+                          ? `bg-primary-first`
+                          : `bg-secondary-first `
+                      } w-8 h-8 flex justify-center items-center rounded-full mr-2`}
+                    >
                       <img src={LogoHome} alt="logohome" />
                     </div>
                     <p>Home</p>
                   </NavLink>
                   <NavLink
                     to={"/history"}
-                    className="flex px-4 py-2 hover:bg-gray-100"
+                    className={`${
+                      splitLocation[1] === "history"
+                        ? `text-primary-first`
+                        : "text-black"
+                    } flex px-4 py-2 hover:bg-gray-100`}
                   >
-                    <div className="w-8 h-8 bg-secondary-first flex justify-center items-center rounded-full mr-2">
+                    <div
+                      className={`${
+                        splitLocation[1] === "history"
+                          ? `bg-primary-first`
+                          : `bg-secondary-first `
+                      } w-8 h-8 flex justify-center items-center rounded-full mr-2`}
+                    >
                       <img src={LogoHistory} alt="logohistory" />
                     </div>
                     <p>History</p>
                   </NavLink>
                   <NavLink
                     to={"/profile"}
-                    className="flex px-4 py-2 hover:bg-gray-100"
+                    className={`${
+                      splitLocation[1] === "profile"
+                        ? `text-primary-first`
+                        : "text-black"
+                    } flex px-4 py-2 hover:bg-gray-100`}
                   >
-                    <div className="w-8 h-8 bg-secondary-first flex justify-center items-center rounded-full mr-2">
+                    <div
+                      className={`${
+                        splitLocation[1] === "profile"
+                          ? `bg-primary-first`
+                          : `bg-secondary-first `
+                      } w-8 h-8 flex justify-center items-center rounded-full mr-2`}
+                    >
                       <img src={LogoHistory} alt="logohistory" />
                     </div>
                     <p>My Profile</p>
