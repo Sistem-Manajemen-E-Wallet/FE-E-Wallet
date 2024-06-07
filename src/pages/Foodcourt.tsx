@@ -32,7 +32,6 @@ const Foodcourt = () => {
   // Call API Product
   const getProducts = useCallback(async () => {
     isLoading(true);
-    console.log("ssseee ", search);
 
     const response = await getAllProduct(currentPage, search);
     if (response.statusCode == 200) {

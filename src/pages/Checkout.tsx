@@ -71,7 +71,6 @@ const Checkout = () => {
         additional: notes,
         price: state.dataCheckout.price * state.dataCheckout.qty,
       };
-      console.log("Dsdsd ", dataTrx);
 
       navigate("/verify-pin", {
         state: {
