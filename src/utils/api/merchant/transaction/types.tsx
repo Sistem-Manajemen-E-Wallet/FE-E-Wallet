@@ -1,4 +1,4 @@
-export interface ProductResponse {
+export interface TransactionResponse {
     message: string;
     meta: Meta;
     data: Daum[];

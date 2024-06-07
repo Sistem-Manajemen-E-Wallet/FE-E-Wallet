@@ -10,10 +10,22 @@ export async function getAllProduct(userId: number) {
   });
 }
 
+export async function createProduct(data: any) {
+  const ROOT_API = import.meta.env.VITE_REACT_API_URL;
+  const url = `${ROOT_API}/products`;
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    token: true,
+  });
+}
+
 export async function getTotalProduct(userId: number) {
   try {
     const data = await getAllProduct(userId);
-    const resp = data.data.meta.total_items;
+    const responseData = data as { data: { meta: { total_items: number } } };
+    const resp = responseData.data.meta.total_items;
 
     return resp;
   } catch (error) {
