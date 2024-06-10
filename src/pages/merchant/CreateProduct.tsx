@@ -18,8 +18,7 @@ const CreateProduct = () => {
     };
 
     try {
-      const response = await createProduct(productData);
-      console.log("Product created:", response);
+      await createProduct(productData);
       setProductName("");
       setDescription("");
       setPrice("");

@@ -74,8 +74,6 @@ export async function getTotalIncome(): Promise<number> {
       totalIncome += transaction.TotalCost;
     });
 
-    console.log("Total Income:", totalIncome);
-
     return totalIncome;
   } catch (error) {
     console.error("Failed to get total income", error);
