@@ -2,7 +2,7 @@ import { FoodcourtComp, LoadingProduct } from "@/components";
 import { Daum, getAllProduct } from "@/utils/api/product";
 import { atom, useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const productAtom = atom<Daum[]>([]);
 const loadingAtom = atom(true);
@@ -16,7 +16,6 @@ const Foodcourt = () => {
   const [currentPage, setCurrentPaginations] = useAtom(currentPageAtom);
   const [pagination, setPaginations] = useAtom(paginationAtom);
   const [search, setSearch] = useAtom(searchAtom);
-  const navigate = useNavigate();
 
   const nextPrevPaginate = (e: any) => {
     setCurrentPaginations(e.target.textContent);
@@ -34,20 +33,13 @@ const Foodcourt = () => {
     isLoading(true);
 
     const response = await getAllProduct(currentPage, search);
+
     if (response.statusCode == 200) {
       isLoading(false);
       setProducts(response.data.data);
-      setPaginations(response.data.meta.total_pages);
-      if (search != "") {
-        navigate(`/product-list?search=${search}`, {
-          state: search,
-          replace: true,
-        });
-      } else {
-        navigate(`/product-list`, {
-          replace: true,
-        });
-      }
+      setPaginations(
+        response.data.meta.total_pages > 0 ? response.data.meta.total_pages : 0
+      );
     } else {
       isLoading(false);
     }
@@ -78,7 +70,10 @@ const Foodcourt = () => {
 
         <div className="flex mobile:block justify-between">
           <h5 className="text-neutral-700 font-bold text-xl mobile:mb-2">
-            What would your like to eat ?
+            What would your like to eat ?{" "}
+            <span className="font-bold text-primary-first">
+              <u>{search}</u>
+            </span>
           </h5>
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -129,8 +124,10 @@ const Foodcourt = () => {
               />
             ))
           ) : (
-            <div className="flex items-center justify-center col-span-12 mt-32">
-              <p className="col-span-12 text-center">No Foodcourt available</p>
+            <div className="flex items-center justify-center col-span-12 mt-32 mb-32">
+              <p className="col-span-12 text-center animate-bounce text-primary-first font-bold text-3xl">
+                No Foodcourt available
+              </p>
             </div>
           )}
         </div>
