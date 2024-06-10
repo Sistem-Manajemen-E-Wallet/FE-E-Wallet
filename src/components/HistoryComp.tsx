@@ -28,16 +28,16 @@ const HistoryComp = (props: {
         <p className="font-light">{props.date}</p>
         <div
           className={`${
-            props.status == "Paid"
+            props.status == "paid"
               ? `bg-green-600`
-              : props.status == "Success"
+              : props.status == "success"
               ? `bg-blue-600`
-              : props.status == "Pending"
+              : props.status == "pending"
               ? `bg-yellow-500`
               : `bg-red-600`
           } rounded-full`}
         >
-          <p className="px-3 py-3 text-white">{props.status}</p>
+          <p className="px-3 py-3 text-white uppercase">{props.status}</p>
         </div>
       </div>
       <div className="flex justify-between">

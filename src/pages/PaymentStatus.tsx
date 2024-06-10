@@ -1,7 +1,7 @@
 import { userWallet } from "@/utils/api/wallet";
 import { atom, useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { LogoSuccess } from "../assets/logo";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 import useQuery from "@/utils/hooks/useQuery";
