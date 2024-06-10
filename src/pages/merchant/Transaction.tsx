@@ -34,18 +34,15 @@ const Transaction = () => {
     newStatus: string
   ) => {
     try {
-      const response = await updateStatusProgress(transactionId, {
+      await updateStatusProgress(transactionId, {
         status_progress: newStatus,
       });
 
-      console.log("Status updated successfully:", response);
       window.location.reload();
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
-
-  console.log(transactions);
 
   return (
     <div>

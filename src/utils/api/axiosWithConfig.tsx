@@ -44,7 +44,6 @@ export default async function callAPI({
         };
       } else {
         Cookies.remove("token");
-        console.log("dddd");
         window.location.reload();
       }
     }
