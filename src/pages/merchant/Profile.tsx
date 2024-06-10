@@ -11,7 +11,6 @@ import {
   updatePhotoSchema,
 } from "@/utils/api/users/types";
 import { userWallet } from "@/utils/api/wallet";
-import { numberWithCommas } from "@/utils/hooks/usePrice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { atom, useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
@@ -30,8 +29,8 @@ const profilePictureAtom = atom("");
 
 const Profile = () => {
   const [profile, setProfile] = useAtom(profileAtom);
-  const [wallets, setWallets] = useAtom(walletAtom);
-  const [loading, isLoading] = useAtom(loadingAtom);
+  const [, setWallets] = useAtom(walletAtom);
+  const [, isLoading] = useAtom(loadingAtom);
   const [profilePicture, setProfilePicture] = useAtom(profilePictureAtom);
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
 
