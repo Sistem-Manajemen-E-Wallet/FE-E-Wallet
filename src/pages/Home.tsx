@@ -42,7 +42,7 @@ const Home = () => {
   }, [getWallet]);
 
   return (
-    <section className="relative p-0 overflow-auto h-screen py-32">
+    <section className="relative p-0 overflow-auto h-screen py-32 mobile:py-20">
       {/* Information Wallet */}
       <div className="container">
         <div className="bg-primary-first mt-10 rounded-full py-10 px-10 flex mobile:block justify-between items-center w-full mobile:text-center">
