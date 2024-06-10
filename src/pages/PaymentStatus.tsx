@@ -4,13 +4,15 @@ import { useCallback, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { LogoSuccess } from "../assets/logo";
 import { numberWithCommas } from "../utils/hooks/usePrice";
+import useQuery from "@/utils/hooks/useQuery";
 
 const walletAtom = atom(0);
 const PaymentStatus = () => {
-  const location = useLocation();
   const [wallets, setWallets] = useAtom(walletAtom);
-  const state = location.state;
-  if (!state) {
+  const query = useQuery();
+  const price = query.get("price") ?? "";
+
+  if (!price) {
     return <Navigate to={"/"} replace />;
   }
 
@@ -37,7 +39,7 @@ const PaymentStatus = () => {
         </p>
         <p className="mb-5 text-xl font-medium text-white">Total Cost</p>
         <p className="mb-16 text-lg font-bold text-white">
-          Rp. {numberWithCommas(state.dataSuccess.price)}
+          Rp. {numberWithCommas(price)}
         </p>
         <p className="font-light text-sm text-white">
           Your current balance is Rp. {numberWithCommas(wallets)}

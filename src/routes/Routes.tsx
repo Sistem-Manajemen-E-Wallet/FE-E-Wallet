@@ -14,6 +14,7 @@ import CreateProduct from "../pages/merchant/CreateProduct";
 import EditProduct from "../pages/merchant/EditProduct";
 import TopUp from "../pages/TopUp";
 import TransactionPending from "../pages/TransactionPending";
+import TopUpStatus from "@/pages/TopUpStatus";
 import Transaction from "../pages/merchant/Transaction";
 import Checkout from "../pages/Checkout";
 import VerifyPin from "../pages/VerifyPin";
@@ -34,6 +35,7 @@ const Routes = () => {
           <Route path="/history" element={<History />} />
           <Route path="/top-up" element={<TopUp />} />
           <Route path="/top-up-detail" element={<TransactionPending />} />
+          <Route path="/top-up-status" element={<TopUpStatus />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/verify-pin" element={<VerifyPin />} />
           <Route path="/payment-detail" element={<PaymentStatus />} />

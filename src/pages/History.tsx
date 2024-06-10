@@ -54,6 +54,7 @@ const History = () => {
             name={item.trx_name}
             type={item.type}
             price={item.amount}
+            id={item.type === 'payment' ? item.transaction_id : item.topup_id}
           />
         ))}
       </div>
