@@ -19,6 +19,7 @@ import LogoLogout from "./log-out.svg";
 import LogoDelete from "./delete.svg";
 import LogoEdit from "./edit.svg";
 import LogoSuccess from "./success.svg";
+import LogoPending from "./pending.svg";
 
 export {
   LogoIcon,
@@ -42,4 +43,5 @@ export {
   LogoDelete,
   LogoEdit,
   LogoSuccess,
+  LogoPending
 };

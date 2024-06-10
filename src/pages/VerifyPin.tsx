@@ -52,20 +52,12 @@ const VerifyPin = () => {
         };
         const responseTrx = await transactionUser(dataTrx);
         if (responseTrx.statusCode == 201) {
-          const dataSuccess = {
-            price: state.dataTrx.price,
-          };
           isLoading(false);
           toast({
             title: "Success transaction",
             description: `${responseTrx.message}`,
           });
-          navigate("/payment-detail", {
-            replace: true,
-            state: {
-              dataSuccess,
-            },
-          });
+          navigate(`/payment-detail?price=${state.dataTrx.price}`);
         }
       } else {
         isLoading(false);

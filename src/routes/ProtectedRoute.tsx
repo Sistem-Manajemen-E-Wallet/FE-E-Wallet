@@ -14,6 +14,7 @@ const ProtectedRoute = () => {
     "/history",
     "/top-up",
     "/top-up-detail",
+    "/top-up-status",
     "/checkout",
     "/verify-pin",
     "/payment-detail",
@@ -34,6 +35,7 @@ const ProtectedRoute = () => {
     "/history",
     "/top-up",
     "/top-up-detail",
+    "/top-up-status",
     "/checkout",
     "/verify-pin",
     "/payment-detail",
@@ -74,6 +76,8 @@ const ProtectedRoute = () => {
       user.role === "Customer" &&
       !isRouteProtected(userProtected, pathname)
     ) {
+      console.log("trrrr");
+
       return <Navigate to="/" />;
     }
 
