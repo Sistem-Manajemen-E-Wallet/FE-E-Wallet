@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { numberWithCommas } from "../utils/hooks/usePrice";
+import dayjs from "dayjs";
 
 const HistoryComp = (props: {
   date: string;
@@ -25,14 +26,14 @@ const HistoryComp = (props: {
       onClick={cardDetail}
     >
       <div className="flex justify-between">
-        <p className="font-light">{props.date}</p>
+        <p className="font-light">{dayjs(props.date).format("MMM D, YYYY h:mm A")}</p>
         <div
           className={`${
-            props.status == "paid"
+            props.status == "Paid"
               ? `bg-green-600`
-              : props.status == "success"
+              : props.status == "Success"
               ? `bg-blue-600`
-              : props.status == "pending"
+              : props.status == "Pending"
               ? `bg-yellow-500`
               : `bg-red-600`
           } rounded-full`}
