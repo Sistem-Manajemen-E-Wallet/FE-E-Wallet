@@ -6,16 +6,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import { numberWithCommas } from "../utils/hooks/usePrice";
 
 const detailAtom = atom<Daum>({});
+const loadingAtom = atom(true);
 
 const DetailFood = () => {
   const params = useParams();
   const [details, setDetails] = useAtom(detailAtom);
+  const [loading, isLoading] = useAtom(loadingAtom);
   const [count, setCount] = useState(1);
 
   // Call API Detail Product
   const getDetailProduct = useCallback(async () => {
     const response = await getSingleProduct(params.id!);
     if (response.statusCode == 200) {
+      isLoading(false);
       setDetails(response.data.data);
     }
   }, []);
@@ -64,11 +67,17 @@ const DetailFood = () => {
           <div className="flex flex-col md:flex-row -mx-4">
             <div className="md:flex-1 px-4">
               <div className="h-[460px] mobile:h-[320px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-2">
-                <img
-                  className="w-full h-full object-cover mobile:w-80 mobile:h-80"
-                  src={details.product_images}
-                  alt="Product Image"
-                />
+                {loading ? (
+                  <div className="w-full h-full">
+                    <div className="animate-pulse"></div>
+                  </div>
+                ) : (
+                  <img
+                    className="w-full h-full object-cover mobile:w-80 mobile:h-80"
+                    src={details.product_images}
+                    alt="Product Image"
+                  />
+                )}
               </div>
             </div>
             <div className="md:flex-1 px-4">
