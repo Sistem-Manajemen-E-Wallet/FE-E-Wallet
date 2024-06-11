@@ -24,6 +24,7 @@ const Foodcourt = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     if (target.name === "search") {
+      setCurrentPaginations(1);
       setSearch(target.value);
     }
   };
@@ -31,7 +32,6 @@ const Foodcourt = () => {
   // Call API Product
   const getProducts = useCallback(async () => {
     isLoading(true);
-
     const response = await getAllProduct(currentPage, search);
 
     if (response.statusCode == 200) {
