@@ -46,31 +46,13 @@ const TransactionPending = () => {
       return iconBank[3];
     }
   };
-  
+
   return (
     <section className="relative overflow-auto h-screen pt-32">
       <div className="py-6 pb-28 bg-slate-100">
         <div className="container">
-          <div className="flex justify-start gap-5 my-6">
-            <svg
-              width="25px"
-              height="25px"
-              viewBox="0 0 1024 1024"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="#525252"
-                d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-              />
-              <path
-                fill="#525252"
-                d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-              />
-            </svg>
-            <span className="text-neutral-600">Top Up Overview</span>
-          </div>
           <div className="flex justify-center">
-            <div className="bg-white w-2/3 rounded-xl shadow-lg p-3">
+            <div className="bg-white w-2/3 mobile:w-auto rounded-xl shadow-lg p-3">
               <div className="flex flex-col space-y-8 p-8">
                 <p className="text-lg font-bold">Payment Instructions</p>
                 <div className="flex flex-col space-y-4">
