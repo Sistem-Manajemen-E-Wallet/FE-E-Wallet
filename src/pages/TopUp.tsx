@@ -41,31 +41,16 @@ const TopUp = () => {
   };
 
   return (
-    <section className="relative overflow-auto h-screen pt-32">
+    <section className="relative overflow-auto h-screen pt-32 mobile:pt-20">
       <div className="py-6 pb-28 bg-slate-100">
         <div className="container">
-          <div className="flex justify-start gap-5 my-6">
-            <svg
-              width="25px"
-              height="25px"
-              viewBox="0 0 1024 1024"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="#525252"
-                d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-              />
-              <path
-                fill="#525252"
-                d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-              />
-            </svg>
-            <span className="text-neutral-600">Top Up</span>
-          </div>
           <div>
             <p className="text-2xl font-bold mb-5">Select Method</p>
           </div>
-          <form className="flex gap-20" onSubmit={handleSubmit(handleTopUp)}>
+          <form
+            className="flex mobile:block gap-20"
+            onSubmit={handleSubmit(handleTopUp)}
+          >
             <div className="grid space-y-2">
               <RadioBank
                 id="radio-bank-1"
@@ -116,9 +101,9 @@ const TopUp = () => {
                 imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/CIMB_Niaga_logo.svg/1200px-CIMB_Niaga_logo.svg.png"
               />
             </div>
-            <div className="flex-1 container bg-white border border-gray-200 rounded-xl p-5 shadow-lg">
+            <div className="flex-1 container bg-white border border-gray-200 rounded-xl p-5 shadow-lg mobile:mt-5">
               <h2 className="mb-5 font-semibold">Select Nominal</h2>
-              <div className="grid grid-cols-4 gap-4 mb-5">
+              <div className="grid grid-cols-4 mobile:grid-cols-2 gap-4 mb-5">
                 {[
                   30000, 50000, 100000, 200000, 300000, 400000, 500000, 1000000,
                 ].map((amount) => (
